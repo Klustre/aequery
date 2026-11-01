@@ -5,7 +5,7 @@
 	"main": "dist/aequery.js",
 	"type": "module",
 	"scripts": {
-		"test": "eslint lib/ test/",
+		"test": "eslint lib test",
 		"lint-fix": "eslint --fix lib test",
 		"build:docs": "node scripts/docs.ts",
 		"build:parser": "node --experimental-import-text scripts/parser.ts"
@@ -23,10 +23,11 @@
 	"author": "Aenhancers",
 	"license": "MIT",
 	"devDependencies": {
+		"@eslint/eslintrc": "^3.3.7",
+		"@eslint/js": "^10.0.1",
 		"docdash": "^0.4.0",
-		"eslint": "^7.19.0",
-		"eslint-config-aftereffects": "^1.1.0",
-		"eslint-config-runegan": "^1.2.0",
+		"eslint": "^10.14.0",
+		"globals": "^17.14.0",
 		"jsdoc": "^3.6.6",
 		"pegjs": "^0.10.0",
 		"prettier": "^3.9.10"
