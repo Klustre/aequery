@@ -1,44 +1,45 @@
 {
-  "name": "aequery",
-  "version": "0.7.1",
-  "description": "General purpose after effects scripting library",
-  "main": "dist/aequery.js",
-  "scripts": {
-    "test": "eslint lib/ test/",
-    "lint-fix": "eslint --fix lib test",
-    "version": "gulp update-version && git add -f docs lib/main.js",
-    "prepublish": "gulp"
-  },
-  "files": [
-    "lib/*",
-    "grammar/*",
-    "dist/*"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "github:aenhancers/aequery"
-  },
-  "issues": "https://github.com/aenhancers/aequery/issues",
-  "author": "Aenhancers",
-  "license": "MIT",
-  "devDependencies": {
-    "del": "^2.2.0",
-    "docdash": "^0.4.0",
-    "eslint": "^7.19.0",
-    "eslint-config-aftereffects": "^1.1.0",
-    "eslint-config-runegan": "^1.2.0",
-    "gulp": "^4.0.2",
-    "gulp-add-src": "^1.0.0",
-    "gulp-change": "^1.0.2",
-    "gulp-concat": "^2.6.1",
-    "gulp-eslint": "^6.0.0",
-    "gulp-rename": "^2.0.0",
-    "gulp-replace": "^1.0.0",
-    "jsdoc": "^3.6.6",
-    "pegjs": "^0.10.0",
-    "pre-commit": "^1.2.2"
-  },
-  "pre-commit": [
-    "test"
-  ]
+	"name": "aequery",
+	"version": "0.7.1",
+	"description": "General purpose after effects scripting library",
+	"main": "dist/aequery.js",
+	"scripts": {
+		"test": "eslint lib/ test/",
+		"lint-fix": "eslint --fix lib test",
+		"version": "gulp update-version && git add -f docs lib/main.js",
+		"prepublish": "gulp"
+	},
+	"files": [
+		"lib/*",
+		"grammar/*",
+		"dist/*"
+	],
+	"repository": {
+		"type": "git",
+		"url": "github:aenhancers/aequery"
+	},
+	"issues": "https://github.com/aenhancers/aequery/issues",
+	"author": "Aenhancers",
+	"license": "MIT",
+	"devDependencies": {
+		"del": "^2.2.0",
+		"docdash": "^0.4.0",
+		"eslint": "^7.19.0",
+		"eslint-config-aftereffects": "^1.1.0",
+		"eslint-config-runegan": "^1.2.0",
+		"gulp": "^4.0.2",
+		"gulp-add-src": "^1.0.0",
+		"gulp-change": "^1.0.2",
+		"gulp-concat": "^2.6.1",
+		"gulp-eslint": "^6.0.0",
+		"gulp-rename": "^2.0.0",
+		"gulp-replace": "^1.0.0",
+		"jsdoc": "^3.6.6",
+		"pegjs": "^0.10.0",
+		"pre-commit": "^1.2.2",
+		"prettier": "^3.9.10"
+	},
+	"pre-commit": [
+		"test"
+	]
 }
