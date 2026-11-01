@@ -2,7 +2,7 @@
 	"plugins": ["plugins/markdown"],
 	"opts": {
 		"template": "node_modules/docdash",
-		"tutorials": "./tutorials",
+		"tutorials": "./docs/tutorials",
 		"destination": "./docs",
 		"readme": "./README.md",
 		"encoding": "utf8",
