@@ -7,7 +7,8 @@
 	"scripts": {
 		"test": "eslint lib/ test/",
 		"lint-fix": "eslint --fix lib test",
-		"build:docs": "node scripts/docs.ts"
+		"build:docs": "node scripts/docs.ts",
+		"build:parser": "node --experimental-import-text scripts/parser.ts"
 	},
 	"files": [
 		"lib/*",
