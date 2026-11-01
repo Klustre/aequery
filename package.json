@@ -12,13 +12,12 @@
 		"build:parser": "node --experimental-import-text scripts/parser.ts"
 	},
 	"files": [
-		"lib/*",
-		"grammar/*",
-		"dist/*"
+		"lib/*"
 	],
 	"exports": {
 		".": "./lib/main.js",
-		"./*": "./lib/*.js"
+		"./*": "./lib/*.js",
+		"./parser/*": null
 	},
 	"repository": {
 		"type": "git",
