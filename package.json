@@ -4,6 +4,8 @@
 	"description": "General purpose after effects scripting library",
 	"main": "dist/aequery.js",
 	"type": "module",
+	"license": "MIT",
+	"issues": "https://github.com/docsforadobe/aequery/issues",
 	"scripts": {
 		"test": "eslint lib test",
 		"lint-fix": "eslint --fix lib test",
@@ -17,11 +19,8 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "github:aenhancers/aequery"
+		"url": "github:docsforadobe/aequery"
 	},
-	"issues": "https://github.com/aenhancers/aequery/issues",
-	"author": "Aenhancers",
-	"license": "MIT",
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.7",
 		"@eslint/js": "^10.0.1",
