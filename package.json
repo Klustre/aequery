@@ -3,10 +3,12 @@
 	"version": "0.7.1",
 	"description": "General purpose after effects scripting library",
 	"main": "dist/aequery.js",
+	"type": "module",
 	"scripts": {
 		"test": "eslint lib/ test/",
 		"lint-fix": "eslint --fix lib test",
 		"version": "gulp update-version && git add -f docs lib/main.js",
+		"build:docs": "node scripts/docs.ts",
 		"prepublish": "gulp"
 	},
 	"files": [
