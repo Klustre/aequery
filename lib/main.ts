@@ -3,7 +3,7 @@ import { arrayEx } from './objects/array.ts'
 import { aeqComp } from './objects/comp.ts'
 import { aeqLayer } from './objects/layer.ts'
 import { aeqProperty } from './objects/property.ts'
-import { select } from './select.ts'
+import { select, SelectorString } from './select.ts'
 import {
 	isAeq,
 	isApp,
@@ -35,14 +35,24 @@ const {
  * `aeqLayer`, `aeqProperty`.
  * @variation 1
  * @method
- * @param  {SelectorString|Array|CompItem|Layer|Property} selector A string containing
- *         a selector expression, or an object to be converted to aeq type object.
- * @param  {CompItem|FolderItem|Layer|PropertyGroup|Array} [context] The object
- *         to start looking from
- * @return {arrayEx|aeqComp|aeqLayer|aeqProperty} The found After Effects
- *         objects, or the converted aequery object
+ * @param selector A string containing a selector expression, or an object to be converted to aeq type object.
+ * @param context The object to start looking from
+ * @return {arrayEx|aeqComp|aeqLayer|aeqProperty} The found After Effects objects, or the converted aequery object
  */
-export function query(selector, context) {
+export function query(
+	selector:
+		| SelectorString
+		| typeof CompItem
+		| typeof Layer
+		| typeof Property
+		| any[],
+	context?:
+		| typeof CompItem
+		| typeof FolderItem
+		| typeof Layer
+		| typeof PropertyGroup
+		| any[],
+) {
 	'use strict'
 
 	if (isNullOrUndefined(selector)) {

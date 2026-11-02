@@ -21,7 +21,6 @@ import {
 const { CompItem, FolderItem, Layer, PropertyGroup } = require('aftereffects')
 
 /**
- * @typedef {String} SelectorString
  * @description The selectorString has 3 expression types:
  *
  * - type
@@ -55,7 +54,7 @@ const { CompItem, FolderItem, Layer, PropertyGroup } = require('aftereffects')
  * a match. Attributes are separated by a space.
  *
  * #### Pseudo
- * Psoudo are a bit like `props` but start with a colon, `:`, followed by a
+ * Pseudo are a bit like `props` but start with a colon, `:`, followed by a
  * keyword specifying how the attributes should match. The attributes are
  * placed inside parenthesis `()`.
  *
@@ -66,7 +65,7 @@ const { CompItem, FolderItem, Layer, PropertyGroup } = require('aftereffects')
  * - `:not()`: objects should not have any attributes matching the props.
  * - `:isnot()`: same as `:not()`
  *
- * Psoudo selectors can be chained.
+ * Pseudo selectors can be chained.
  *
  * @example <caption>Get all comps with width and height of 1920x1080</caption>
  *     query("comp[width=1920 heigth=1080]")
@@ -83,20 +82,27 @@ const { CompItem, FolderItem, Layer, PropertyGroup } = require('aftereffects')
  *          that are selected:</caption>
  *    query("comp:is(selected) layer:not(hasAudio)")
  */
+export type SelectorString = string
 
 /**
  * Gets objects by looking at a string and finding objects in After Effects
  * matching the description. The context is used to determine a starting point
  * for where the function starts looking for elements.
  * @method
- * @param  {SelectorString} selector A string containing a
- *         selector expression
- * @param  {CompItem|FolderItem|Layer|PropertyGroup|Array} [context] The object
- *         to start looking from
+ * @param selector A string containing a selector expression
+ * @param context The object to start looking from
  * @return {arrayEx} The found After Effects objects
  */
 // TODO: Fix complexity of this function
-export function select(selector, context) {
+export function select(
+	selector: SelectorString,
+	context?:
+		| typeof CompItem
+		| typeof FolderItem
+		| typeof Layer
+		| typeof PropertyGroup
+		| any[],
+) {
 	let results = []
 	let parsedSelector = cssselector.parse(selector)
 	let parts = parsedSelector

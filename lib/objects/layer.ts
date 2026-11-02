@@ -54,11 +54,18 @@ aeqLayer.prototype = {
 	 * Gets or sets layer parent
 	 * @method
 	 * @instance
-	 * @param  {SelectorString|null} [selector] Selector for new parent, or
-	 * null to remove parent
+	 * @param selector Selector for new parent, or null to remove parent.
+	 * The selector argument can be one of the following:
+	 * - an `aeqLayer` object
+	 * - a `Layer` object
+	 * - an index for a layer in the comp
+	 * - a `string` with a layer name
+	 * - a `string` starting with `+=` or `-=` then a `number` to indicate an index relative to the current layer
 	 * @return {Layer|null} Parent layer, or null if none
 	 */
-	parent: function (selector) {
+	parent: function (
+		selector?: typeof Layer | typeof aeqLayer | number | string,
+	) {
 		if (arguments.length === 0) {
 			return this.layer.parent
 		}
@@ -266,15 +273,18 @@ forEach(['setParentWithJump', 'moveAfter', 'moveBefore'], function (method) {
 // Used in aeqLayer.parent, setParentWithJump and move methods
 const regexRelativeIndex = /^(\+|-)=/
 
-/* The selector argument can be one of the following:
- * An aeqLayer object
- * A Layer object
- * An index for a layer in the comp
- * A string with a layer name
- * A string starting with "+=" or "-=" then a number to indicate an index
- * relative to the current layer
+/**
+ * The selector argument can be one of the following:
+ * - an `aeqLayer` object
+ * - a `Layer` object
+ * - an index for a layer in the comp
+ * - a `string` with a layer name
+ * - a `string` starting with `+=` or `-=` then a `number` to indicate an index relative to the current layer
  */
-function getLayer(baseLayer, selector) {
+function getLayer(
+	baseLayer: typeof Layer,
+	selector: typeof Layer | typeof aeqLayer | number | string,
+) {
 	let index
 	let offset
 
