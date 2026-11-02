@@ -21,9 +21,9 @@ If you are not using npm, you can download the latest version from [Github Relea
 Import into your script
 
 ```js
-import { aeq } from 'aequery'
+import { query } from 'aequery'
 // Disable all Camera lens blur effects in active comp
-aeq('activecomp effect[matchName="ADBE Camera Lens Blur"]').attr(
+query('activecomp effect[matchName="ADBE Camera Lens Blur"]').attr(
 	'enabled',
 	false,
 )
