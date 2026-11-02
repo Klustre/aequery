@@ -1,6 +1,6 @@
-import { extend, filter, setDefault } from '../main'
-import { isComp, isFolderItem, isNullOrUndefined } from '../types'
-import { getQueuedItems, getRQItems } from './renderqueue'
+import { extend, filter, setDefault } from '../main.ts'
+import { isComp, isFolderItem, isNullOrUndefined } from '../types.ts'
+import { getQueuedItems, getRQItems } from './renderqueue.ts'
 
 const { app, CompItem, RenderQueueItem, FolderItem } = require('aftereffects')
 

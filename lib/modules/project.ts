@@ -1,6 +1,6 @@
-import { getCompositions, getItems } from '../dom'
-import { filter, forEach, setDefault } from '../main'
-import { arrayEx } from '../objects/array'
+import { getCompositions, getItems } from '../dom.ts'
+import { filter, forEach, setDefault } from '../main.ts'
+import { arrayEx } from '../objects/array.ts'
 import {
 	isArray,
 	isComp,
@@ -9,11 +9,18 @@ import {
 	isFootageItem,
 	isNullOrUndefined,
 	isString,
-} from '../types'
-import { getAEP } from './app'
-import { getQueuedComps } from './renderqueue'
+} from '../types.ts'
+import { getAEP } from './app.ts'
+import { getQueuedComps } from './renderqueue.ts'
 
-const { app, FolderItem, FootageItem, CompItem, Item, ImportOptions } = require('aftereffects')
+const {
+	app,
+	FolderItem,
+	FootageItem,
+	CompItem,
+	Item,
+	ImportOptions,
+} = require('aftereffects')
 
 /**
  * Gets all footage items in project

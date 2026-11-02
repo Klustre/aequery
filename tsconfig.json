@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"noEmit": true,
+		"checkJs": true,
+		"allowJs": true,
+		"noImplicitAny": true,
+		"allowImportingTsExtensions": true,
+		"moduleResolution": "nodenext",
+		"module": "nodenext"
+	},
+	"include": ["lib/**/*"]
+}

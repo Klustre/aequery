@@ -4,6 +4,7 @@ import { writeFile } from 'node:fs/promises'
 
 const parser = peg.generate(grammar, { output: 'source' })
 const content = [
+	'// @ts-nocheck',
 	'// Generated automatically. Do not edit.',
 	`export const cssselector=${parser}`,
 ].join('\n')

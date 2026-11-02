@@ -1,9 +1,9 @@
-import * as aeqApp from './modules/app'
-import { arrayEx } from './objects/array'
-import { aeqComp } from './objects/comp'
-import { aeqLayer } from './objects/layer'
-import { aeqProperty } from './objects/property'
-import { select } from './select'
+import * as aeqApp from './modules/app.ts'
+import { arrayEx } from './objects/array.ts'
+import { aeqComp } from './objects/comp.ts'
+import { aeqLayer } from './objects/layer.ts'
+import { aeqProperty } from './objects/property.ts'
+import { select } from './select.ts'
 import {
 	isAeq,
 	isApp,
@@ -15,9 +15,15 @@ import {
 	isPlainObject,
 	isProperty,
 	isString,
-} from './types'
+} from './types.ts'
 
-const { FolderItem, Layer, CompItem, PropertyGroup, Property } = require('aftereffects')
+const {
+	FolderItem,
+	Layer,
+	CompItem,
+	PropertyGroup,
+	Property,
+} = require('aftereffects')
 
 /**
  * Gets objects by looking at a string and finding objects in After
@@ -167,7 +173,11 @@ export function extend() {
 				}
 
 				// Recurse if we're merging plain objects or arrays
-				if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+				if (
+					deep &&
+					copy &&
+					(isPlainObject(copy) || (copyIsArray = isArray(copy)))
+				) {
 					if (copyIsArray) {
 						copyIsArray = false
 						clone = src && isArray(src) ? src : []

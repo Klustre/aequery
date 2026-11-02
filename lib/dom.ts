@@ -1,11 +1,17 @@
-import { assertIsNotNull } from './assert'
-import { forEachLayer } from './forEach'
-import { forEach, setDefault } from './main'
-import { version } from './modules/app'
-import { getFolder } from './modules/file'
-import { arrayEx } from './objects/array'
-import { aeqKey } from './objects/key'
-import { isArray, isComp, isFolderItem, isLayer, isPropertyGroup } from './types'
+import { assertIsNotNull } from './assert.ts'
+import { forEachLayer } from './forEach.ts'
+import { forEach, setDefault } from './main.ts'
+import { version } from './modules/app.ts'
+import { getFolder } from './modules/file.ts'
+import { arrayEx } from './objects/array.ts'
+import { aeqKey } from './objects/key.ts'
+import {
+	isArray,
+	isComp,
+	isFolderItem,
+	isLayer,
+	isPropertyGroup,
+} from './types.ts'
 
 const {
 	app,

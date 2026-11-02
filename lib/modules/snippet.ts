@@ -1,6 +1,6 @@
-import { getActiveComposition, getSelectedLayersOrAll } from '../dom'
-import { createUndoGroup } from '../misc/undoGroup'
-import { arrayEx } from '../objects/array'
+import { getActiveComposition, getSelectedLayersOrAll } from '../dom.ts'
+import { createUndoGroup } from '../misc/undoGroup.ts'
+import { arrayEx } from '../objects/array.ts'
 
 /**
  * Gets the active comp and alerts the user if no comp is open. It then

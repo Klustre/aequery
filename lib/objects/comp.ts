@@ -1,4 +1,4 @@
-import { extend } from '../main'
+import { extend } from '../main.ts'
 
 const { CompItem } = require('aftereffects')
 

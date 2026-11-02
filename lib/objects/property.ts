@@ -1,7 +1,7 @@
-import { extend, forEach } from '../main'
-import { isNumber } from '../types'
-import { arrayEx } from './array'
-import { aeqKey } from './key'
+import { extend, forEach } from '../main.ts'
+import { isNumber } from '../types.ts'
+import { arrayEx } from './array.ts'
+import { aeqKey } from './key.ts'
 
 const { Property } = require('aftereffects')
 

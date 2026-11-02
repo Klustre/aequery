@@ -1,4 +1,24 @@
-import { cssselector } from './parser/parser'
+import { cssselector } from './parser/parser.ts'
+import {
+	getActiveComposition,
+	getCompositions,
+	getEffects,
+	getItems,
+	getKeys,
+	getLayers,
+	getProperties,
+} from './dom.ts'
+import { arrayEx } from './objects/array.ts'
+import {
+	isArray,
+	isComp,
+	isLayer,
+	isProperty,
+	isPropertyGroup,
+	isString,
+} from './types.ts'
+
+const { CompItem, FolderItem, Layer, PropertyGroup } = require('aftereffects')
 
 /**
  * @typedef {String} SelectorString
@@ -64,19 +84,6 @@ import { cssselector } from './parser/parser'
  *    query("comp:is(selected) layer:not(hasAudio)")
  */
 
-import {
-	getActiveComposition,
-	getCompositions,
-	getEffects,
-	getItems,
-	getKeys,
-	getLayers,
-	getProperties,
-} from './dom'
-import { arrayEx } from './objects/array'
-import { isArray, isComp, isLayer, isProperty, isPropertyGroup, isString } from './types'
-
-const { CompItem, FolderItem, Layer, PropertyGroup } = require('aftereffects')
 /**
  * Gets objects by looking at a string and finding objects in After Effects
  * matching the description. The context is used to determine a starting point
@@ -163,7 +170,9 @@ export function select(selector, context) {
 					isLayer(results[0]) ||
 					isPropertyGroup(results[0])
 				) {
-					results = filterResults(getProperties(results, { separate: false }))
+					results = filterResults(
+						getProperties(results, { separate: false }),
+					)
 					results.type = 'property'
 				} else if (results.type !== 'layer') {
 					parts.unshift({ type: 'layer' })
@@ -254,7 +263,12 @@ function hasAllAttributes(obj, attributes, not) {
 		attributeValue = attributes[attribute]
 
 		if (!obj.hasOwnProperty(attribute)) {
-			throw new Error('The attribute ' + attribute + ' does not exist on a ' + typeof obj)
+			throw new Error(
+				'The attribute ' +
+					attribute +
+					' does not exist on a ' +
+					typeof obj,
+			)
 		}
 
 		var isSame = compare(attributeValue, obj[attribute])

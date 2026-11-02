@@ -1,6 +1,12 @@
-import { getCompositions, getPropertyChildren } from './dom'
-import { forEach } from './main'
-import { isArray, isComp, isFunction, isLayer, isPropertyGroup } from './types'
+import { getCompositions, getPropertyChildren } from './dom.ts'
+import { forEach } from './main.ts'
+import {
+	isArray,
+	isComp,
+	isFunction,
+	isLayer,
+	isPropertyGroup,
+} from './types.ts'
 
 const { app, CompItem, Layer, PropertyGroup } = require('aftereffects')
 

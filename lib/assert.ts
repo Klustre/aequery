@@ -1,4 +1,4 @@
-import { isEmpty, isNullOrUndefined } from './types'
+import { isEmpty, isNullOrUndefined } from './types.ts'
 
 /**
  * Checks if value is null. Throws an error if it is not.

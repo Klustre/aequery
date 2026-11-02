@@ -1,6 +1,6 @@
-import { getLayers } from '../dom'
-import { forEach } from '../main'
-import { arrayEx } from '../objects/array'
+import { getLayers } from '../dom.ts'
+import { forEach } from '../main.ts'
+import { arrayEx } from '../objects/array.ts'
 
 const { Layer } = require('aftereffects')
 

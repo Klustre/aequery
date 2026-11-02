@@ -1,6 +1,11 @@
-import { valueInObject } from '../misc/valueInObject'
+import { valueInObject } from '../misc/valueInObject.ts'
 
-const { PropertyType, Property, Layer, PropertyValueType } = require('aftereffects')
+const {
+	PropertyType,
+	Property,
+	Layer,
+	PropertyValueType,
+} = require('aftereffects')
 
 /**
  * Returns the property value type of a Property as a string.
@@ -32,7 +37,10 @@ const { PropertyType, Property, Layer, PropertyValueType } = require('aftereffec
  * valueType( layer.Transform.Position )
  */
 export function valueType(property) {
-	return valueInObject(property.propertyValueType || property, PropertyValueType)
+	return valueInObject(
+		property.propertyValueType || property,
+		PropertyValueType,
+	)
 }
 export { valueType as getPropertyValueType }
 

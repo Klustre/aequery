@@ -1,4 +1,4 @@
-import { isArray } from '../types'
+import { isArray } from '../types.ts'
 
 const { app } = require('aftereffects')
 

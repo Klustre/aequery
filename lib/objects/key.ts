@@ -1,8 +1,13 @@
-import { extend, forEach } from '../main'
-import { isArray, isString } from '../types'
-import { aeqProperty } from './property'
+import { extend, forEach } from '../main.ts'
+import { isArray, isString } from '../types.ts'
+import { aeqProperty } from './property.ts'
 
-const { Property, PropertyValueType, KeyframeInterpolationType } = require('aftereffects')
+const {
+	Property,
+	PropertyValueType,
+	KeyframeInterpolationType,
+} = require('aftereffects')
+
 /**
  * Converts a Key into an aeqKey object
  * @class
@@ -18,7 +23,9 @@ export function aeqKey(property, index) {
 
 		// Check if index is valid
 		if (index <= 0 || index > property.numKeys) {
-			throw new Error('Index ' + index + ' out of range 1-' + property.numKeys)
+			throw new Error(
+				'Index ' + index + ' out of range 1-' + property.numKeys,
+			)
 		}
 
 		this.property = property
@@ -43,7 +50,10 @@ aeqKey.prototype = {
 	// TODO: consider not checking this in every function or find better way to do this
 	checkKey: function () {
 		// Check if index is in range and that key at that index is at correct time
-		if (this.index <= this.property.numKeys && this.getTime() === this.originalTime) {
+		if (
+			this.index <= this.property.numKeys &&
+			this.getTime() === this.originalTime
+		) {
 			return // If it is, then the index is still correct
 		}
 
@@ -167,7 +177,10 @@ aeqKey.prototype = {
 	spatialTangent: function (inType, outType) {
 		this.checkKey()
 
-		if (!(this.valueTypeIs('TwoD_SPATIAL') || this.valueTypeIs('ThreeD_SPATIAL'))) {
+		if (!(
+			this.valueTypeIs('TwoD_SPATIAL') ||
+			this.valueTypeIs('ThreeD_SPATIAL')
+		)) {
 			return null
 		}
 
@@ -308,20 +321,27 @@ aeqKey.prototype = {
 
 		// These do not have any effect if interpolationType is not Bezier for in and out
 		if (
-			keyInfo.interpolationType.inType === KeyframeInterpolationType.BEZIER &&
-			keyInfo.interpolationType.outType === KeyframeInterpolationType.BEZIER
+			keyInfo.interpolationType.inType ===
+				KeyframeInterpolationType.BEZIER &&
+			keyInfo.interpolationType.outType ===
+				KeyframeInterpolationType.BEZIER
 		) {
 			keyInfo.temporalAutoBezier = this.temporalAutoBezier()
 			keyInfo.temporalContinuous = this.temporalContinuous()
 		}
 
 		// TODO: find out why this check is here, was like that in rd_scooter
-		if (keyInfo.interpolationType.outType !== KeyframeInterpolationType.HOLD) {
+		if (
+			keyInfo.interpolationType.outType !== KeyframeInterpolationType.HOLD
+		) {
 			keyInfo.temporalEase = this.temporalEase()
 		}
 
 		// These attributes throws an error if valuetype is not spatial when setting
-		if (this.valueTypeIs('TwoD_SPATIAL') || this.valueTypeIs('ThreeD_SPATIAL')) {
+		if (
+			this.valueTypeIs('TwoD_SPATIAL') ||
+			this.valueTypeIs('ThreeD_SPATIAL')
+		) {
 			keyInfo.spatialAutoBezier = this.spatialAutoBezier()
 			keyInfo.spatialContinuous = this.spatialContinuous()
 			keyInfo.spatialTangent = this.spatialTangent()
@@ -434,8 +454,14 @@ export function pasteKey(keyInfo) {
 		keyInfo.value = [keyInfo.value[0], keyInfo.value[1]]
 		var spatialTangent = keyInfo.spatialTangent
 		keyInfo.spatialTangent = {
-			inTangent: [spatialTangent.inTangent[0], spatialTangent.inTangent[1]],
-			outTangent: [spatialTangent.outTangent[0], spatialTangent.outTangent[1]],
+			inTangent: [
+				spatialTangent.inTangent[0],
+				spatialTangent.inTangent[1],
+			],
+			outTangent: [
+				spatialTangent.outTangent[0],
+				spatialTangent.outTangent[1],
+			],
 		}
 	}
 
@@ -448,12 +474,18 @@ export function pasteKey(keyInfo) {
 
 	key.interpolationType(keyInfo.interpolationType)
 
-	if (keyInfo.temporalAutoBezier !== undefined && keyInfo.temporalContinuous !== undefined) {
+	if (
+		keyInfo.temporalAutoBezier !== undefined &&
+		keyInfo.temporalContinuous !== undefined
+	) {
 		key.temporalAutoBezier(keyInfo.temporalAutoBezier)
 		key.temporalContinuous(keyInfo.temporalContinuous)
 	}
 
-	if (keyInfo.spatialAutoBezier !== undefined && keyInfo.spatialContinuous !== undefined) {
+	if (
+		keyInfo.spatialAutoBezier !== undefined &&
+		keyInfo.spatialContinuous !== undefined
+	) {
 		key.spatialAutoBezier(keyInfo.spatialAutoBezier)
 		key.spatialContinuous(keyInfo.spatialContinuous)
 

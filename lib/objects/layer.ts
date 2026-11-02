@@ -1,8 +1,13 @@
-import { getComp } from '../dom'
-import { extend, forEach } from '../main'
-import { allChildren, children, parents, relatedLayers } from '../modules/layer'
-import { isComp, isLayer, isNumber, isString } from '../types'
-import { aeqComp } from './comp'
+import { getComp } from '../dom.ts'
+import { extend, forEach } from '../main.ts'
+import {
+	allChildren,
+	children,
+	parents,
+	relatedLayers,
+} from '../modules/layer.ts'
+import { isComp, isLayer, isNumber, isString } from '../types.ts'
+import { aeqComp } from './comp.ts'
 
 const { Layer, CompItem } = require('aftereffects')
 
@@ -132,7 +137,9 @@ aeqLayer.prototype = {
 		if (effects.canAddProperty(effectName)) {
 			effects.addProperty(effectName)
 		} else {
-			throw new Error('Can not add effect "' + effectName + '" to this layer')
+			throw new Error(
+				'Can not add effect "' + effectName + '" to this layer',
+			)
 		}
 	},
 
@@ -182,7 +189,15 @@ aeqLayer.prototype = {
 // Create methods that only returns the value for attributes that are read-
 // only and can change over time;
 forEach(
-	['active', 'index', 'isNameSet', 'selectedProperties', 'time', 'containingComp', 'hasVideo'],
+	[
+		'active',
+		'index',
+		'isNameSet',
+		'selectedProperties',
+		'time',
+		'containingComp',
+		'hasVideo',
+	],
 	function (attribute) {
 		aeqLayer.prototype[attribute] = function () {
 			return this.layer[attribute]
@@ -219,7 +234,14 @@ forEach(
 
 // Create Methods that just call the layer object methods
 forEach(
-	['activeAtTime', 'applyPreset', 'duplicate', 'remove', 'moveToBeginning', 'moveToEnd'],
+	[
+		'activeAtTime',
+		'applyPreset',
+		'duplicate',
+		'remove',
+		'moveToBeginning',
+		'moveToEnd',
+	],
 	function (method) {
 		aeqLayer.prototype[method] = function (newValue) {
 			this.layer[method](newValue)

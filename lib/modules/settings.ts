@@ -1,5 +1,5 @@
-import { forEach, setDefault } from '../main'
-import { isObject } from '../types'
+import { forEach, setDefault } from '../main.ts'
+import { isObject } from '../types.ts'
 
 const { app } = require('aftereffects')
 

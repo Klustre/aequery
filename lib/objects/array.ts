@@ -1,13 +1,12 @@
+import { attr } from '../attr.ts'
+import { extend, setDefault } from '../main.ts'
+
 /**
  * Array with some extensions that mimics modern JavaScript.
  * @class
  * @param  {Array} arr The array object to extend. If not supplied, an empty
  *                     arrayEx will be returned.
  */
-
-import { attr } from '../attr'
-import { extend, setDefault } from '../main'
-
 var arrayExObj = {
 	/**
 	 * Loops through the elements in the array and executes a function.

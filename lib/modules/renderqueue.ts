@@ -1,8 +1,15 @@
-import { normalizeCollection } from '../dom'
-import { arrayEx } from '../objects/array'
-import { create } from './comp'
+import { normalizeCollection } from '../dom.ts'
+import { arrayEx } from '../objects/array.ts'
+import { create } from './comp.ts'
 
-const { app, Item, CompItem, RenderQueueItem, RQItemStatus, OutputModule } = require('aftereffects')
+const {
+	app,
+	Item,
+	CompItem,
+	RenderQueueItem,
+	RQItemStatus,
+	OutputModule,
+} = require('aftereffects')
 
 /**
  * Add a project item to the render queue.
