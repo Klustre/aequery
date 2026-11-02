@@ -322,9 +322,9 @@ export function isMaskPropertyGroup(o: any) {
  * @return [description]
  */
 export function reflect(obj: Record<string, any>) {
-	var str = []
+	let str = []
 
-	for (var m in obj) {
+	for (let m in obj) {
 		if (obj.hasOwnProperty(m)) {
 			str.push(obj[m].constructor.name + ' ' + m + '=' + obj[m])
 		}

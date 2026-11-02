@@ -7,7 +7,7 @@ import { extend } from '../main.ts'
  * @param  {Array} arr The array object to extend. If not supplied, an empty
  *                     arrayEx will be returned.
  */
-var arrayExObj = {
+let arrayExObj = {
 	/**
 	 * Loops through the elements in the array and executes a function.
 	 * @memberof arrayEx
@@ -15,9 +15,8 @@ var arrayExObj = {
 	 * @param  {forEachArrayCallback} callback Function to execute for each element
 	 */
 	forEach: function (callback) {
-		var len = this.length
-
-		for (var i = 0; i < len; i++) {
+		let len = this.length
+		for (let i = 0; i < len; i++) {
 			callback(this[i], i, this)
 		}
 	},
@@ -32,14 +31,12 @@ var arrayExObj = {
 	 * element
 	 */
 	some: function (callback) {
-		var len = this.length
-
-		for (var i = 0; i < len; i++) {
+		let len = this.length
+		for (let i = 0; i < len; i++) {
 			if (callback(this[i], i, this)) {
 				return true
 			}
 		}
-
 		return false
 	},
 
@@ -53,14 +50,12 @@ var arrayExObj = {
 	 * elements
 	 */
 	every: function (callback) {
-		var len = this.length
-
-		for (var i = 0; i < len; i++) {
+		let len = this.length
+		for (let i = 0; i < len; i++) {
 			if (!callback(this[i], i, this)) {
 				return false
 			}
 		}
-
 		return true
 	},
 
@@ -74,7 +69,6 @@ var arrayExObj = {
 		if (this.length === 0) {
 			throw new Error('There are no items in this array')
 		}
-
 		return this[0]
 	},
 
@@ -87,14 +81,12 @@ var arrayExObj = {
 	 * @return {any}               Array element that triggered callback, or default
 	 */
 	find: function (callback, def) {
-		var len = this.length
-
-		for (var i = 0; i < len; i++) {
+		let len = this.length
+		for (let i = 0; i < len; i++) {
 			if (callback(this[i], i, this)) {
 				return this[i]
 			}
 		}
-
 		return def
 	},
 
@@ -106,13 +98,12 @@ var arrayExObj = {
 	 * @return {any}               Index of array element that triggered callback, or -1
 	 */
 	findIndex: function (callback) {
-		var len = this.length
-		for (var i = 0; i < len; i++) {
+		let len = this.length
+		for (let i = 0; i < len; i++) {
 			if (callback(this[i], i, this)) {
 				return i
 			}
 		}
-
 		return -1
 	},
 
@@ -125,15 +116,13 @@ var arrayExObj = {
 	 * @return {arrayEx}       ArrayEx of filtered elements
 	 */
 	filter: function (callback) {
-		var filteredArr = []
-		var len = this.length
-
-		for (var i = 0; i < len; i++) {
+		const len = this.length
+		let filteredArr = []
+		for (let i = 0; i < len; i++) {
 			if (callback(this[i], i, this)) {
 				filteredArr.push(this[i])
 			}
 		}
-
 		return arrayEx(filteredArr)
 	},
 
@@ -146,7 +135,7 @@ var arrayExObj = {
 	 * @return {number}               `-1` if element is not found, else index number
 	 */
 	indexOf: function (searchElement, fromIndex) {
-		var k
+		let k
 
 		// 1. Let o be the result of calling ToObject passing
 		//    the this value as the argument.
@@ -154,12 +143,12 @@ var arrayExObj = {
 			throw new TypeError('"this" is null or not defined')
 		}
 
-		var o = Object(this)
+		let o = Object(this)
 
 		// 2. Let lenValue be the result of calling the Get
 		//    internal method of o with the argument "length".
 		// 3. Let len be ToUint32(lenValue).
-		var len = o.length >>> 0
+		let len = o.length >>> 0
 
 		// 4. If len is 0, return -1.
 		if (len === 0) {
@@ -168,7 +157,7 @@ var arrayExObj = {
 
 		// 5. If argument fromIndex was passed let n be
 		//    ToInteger(fromIndex); else let n be 0.
-		var n = +fromIndex || 0
+		let n = +fromIndex || 0
 
 		if (Math.abs(n) === Infinity) {
 			n = 0
@@ -219,10 +208,10 @@ var arrayExObj = {
 	 * for more info
 	 */
 	map: function (callback) {
-		var selectedArr = []
-		var len = this.length
+		let selectedArr = []
+		let len = this.length
 
-		for (var i = 0; i < len; i++) {
+		for (let i = 0; i < len; i++) {
 			selectedArr.push(callback(this[i], i, this))
 		}
 
@@ -238,12 +227,12 @@ var arrayExObj = {
 	 * value is an array of elements matching key
 	 */
 	groupBy: function (callback) {
-		var obj = {}
-		var len = this.length
+		let obj = {}
+		let len = this.length
 
-		for (var i = 0; i < len; i++) {
-			var key = callback(this[i], i, this) || 'undefined'
-			var arr = obj[key] || []
+		for (let i = 0; i < len; i++) {
+			let key = callback(this[i], i, this) || 'undefined'
+			let arr = obj[key] || []
 
 			arr.push(this[i])
 

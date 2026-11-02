@@ -18,7 +18,7 @@ export function copyLayerToggles(
 	sourceLayer: typeof Layer,
 	destLayer: typeof Layer,
 ) {
-	var switches =
+	const switches =
 		'enabled solo shy quality effectsActive motionBlur ' +
 		'adjustmentLayer threeDLayer blendingMode preserveTransparency ' +
 		'parent inPoint stretch startTime outPoint label guideLayer ' +
@@ -37,7 +37,7 @@ export function copyLayerToggles(
  * @return {arrayEx} The children Layers of the given Layer.
  */
 export function children(parentLayer: typeof Layer) {
-	var layers = getLayers(parentLayer.containingComp)
+	const layers = getLayers(parentLayer.containingComp)
 	return layers.filter(function (layer) {
 		return layer.parent === parentLayer
 	})
@@ -52,8 +52,8 @@ export { children as getLayerChildren }
  * @return {arrayEx} Children and decendants of the given Layer.
  */
 export function allChildren(parentLayer: typeof Layer) {
-	var layers: (typeof Layer)[] = []
-	var kids = children(parentLayer)
+	let layers: (typeof Layer)[] = []
+	const kids = children(parentLayer)
 	forEach(kids, function (layer) {
 		layers.push(layer)
 		layers = layers.concat(allChildren(layer))
@@ -69,8 +69,8 @@ export { children as getLayerChildrenRecursive }
  * @return {arrayEx} The Parents of the given layer.
  */
 export function parents(childLayer: typeof Layer) {
-	var parents = arrayEx()
-	var layer = childLayer
+	const parents = arrayEx()
+	let layer = childLayer
 	while (layer.parent !== null) {
 		parents.push(layer.parent)
 		layer = layer.parent
@@ -87,9 +87,9 @@ export { parents as getLayerParentsRecursive }
  * @return {arrayEx} The layer's parents and children.
  */
 export function relatedLayers(root: typeof Layer) {
-	var pars = parents(root)
-	var children = allChildren(root)
-	var all = pars.push.apply(pars, children)
+	let pars = parents(root)
+	const children = allChildren(root)
+	const all = pars.push.apply(pars, children)
 	return arrayEx(all)
 }
 export { relatedLayers as getRelatedLayers }

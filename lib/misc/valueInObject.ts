@@ -8,7 +8,7 @@ const { PropertyType } = require('aftereffects')
  * @return {type}       [description]
  */
 export function valueInObject(value, obj) {
-	for (var key in obj) {
+	for (let key in obj) {
 		if (obj.hasOwnProperty(key)) {
 			if (value === obj[key]) {
 				return key

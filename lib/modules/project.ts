@@ -31,7 +31,7 @@ const {
 export function getFootage(
 	parentFolder: typeof FolderItem | string = app.project.rootFolder,
 ) {
-	var items = getItems(parentFolder)
+	const items = getItems(parentFolder)
 	return items.filter(isFootageItem)
 }
 
@@ -44,7 +44,7 @@ export function getFootage(
 export function getFolders(
 	parentFolder: typeof FolderItem | string = app.project.rootFolder,
 ) {
-	var folders = getItems(parentFolder)
+	const folders = getItems(parentFolder)
 	return folders.filter(isFolderItem)
 }
 
@@ -59,9 +59,8 @@ export function findFolder(
 	name: string,
 	parentFolder: typeof FolderItem | string = app.project.rootFolder,
 ) {
-	var folders = getFolders(parentFolder)
-
-	var folder = filter(folders, function (folder) {
+	const folders = getFolders(parentFolder)
+	const folder = filter(folders, function (folder) {
 		return folder.name === name
 	})
 	if (folder.length) {
@@ -149,7 +148,7 @@ export function getOrCreateFolder(
 		parentFolder = getOrCreateFolder(parentFolder)
 	}
 
-	var foundFolder = getFolder(folder, parentFolder)
+	const foundFolder = getFolder(folder, parentFolder)
 
 	if (isNullOrUndefined(foundFolder)) {
 		return parentFolder.items.addFolder(folder)
@@ -186,7 +185,7 @@ export function save(path?: string) {
 	// 	return app.project.save()
 	// }
 
-	// var file = getFileObject(path)
+	// let file = getFileObject(path)
 
 	// if (file.exists) {
 	// 	if (!confirm('File exists! Overwrite?')) {
@@ -203,7 +202,7 @@ export function save(path?: string) {
  * @return Path of AEP
  */
 export function quickSave() {
-	var file = getAEP()
+	let file = getAEP()
 	return app.project.save(file)
 }
 
@@ -219,10 +218,10 @@ export function quickSave() {
  */
 export function importFile(file, folder, options) {
 	throw new Error('TODO: Migrate to UXP')
-	// var proj = app.project,
+	// let proj = app.project,
 	// 	newItem
 
-	// var newFile = getFile(file)
+	// let newFile = getFile(file)
 
 	// if (!isFile(newFile)) {
 	// 	throw new Error(file + ' is not a valid file!')
@@ -236,7 +235,7 @@ export function importFile(file, folder, options) {
 
 	// options = setDefault(options, {})
 
-	// var iO = new ImportOptions(newFile)
+	// let iO = new ImportOptions(newFile)
 
 	// if (options.sequence === true) {
 	// 	iO.sequence = true
@@ -268,14 +267,14 @@ export function importFile(file, folder, options) {
  */
 export function simpleImportFile(file, options?) {
 	throw new Error('TODO: Migrate to UXP')
-	// var iO = new ImportOptions(file)
+	// let iO = new ImportOptions(file)
 
 	// options = setDefault(options, {})
 	// if (options.sequence === true) {
 	// 	iO.sequence = true
 	// }
 
-	// var newItem
+	// let newItem
 	// try {
 	// 	newItem = app.project.importFile(iO)
 	// } catch (e) {
@@ -306,10 +305,10 @@ export function importSequence(file, folder) {
  * @return {Item[]}                          ArrayEx of imported items
  */
 export function importFiles(fileArray, folder, options) {
-	var importedItems = arrayEx()
+	let importedItems = arrayEx()
 
 	forEach(fileArray, function (file) {
-		var item = importFile(file, folder, options)
+		let item = importFile(file, folder, options)
 		importedItems.push(item)
 	})
 
@@ -344,7 +343,7 @@ export function moveToFolder(
  * @return {CompItem[]|null} Array of queued comps, or null
  */
 export function reduceToQueuedComps() {
-	var queuedComps = getQueuedComps()
+	const queuedComps = getQueuedComps()
 
 	if (queuedComps.length === 0) {
 		return null

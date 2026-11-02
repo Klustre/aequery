@@ -49,7 +49,7 @@ export function query(selector, context) {
 		return selector
 	}
 
-	var result
+	let result
 
 	if (isAeq(selector)) {
 		result = selector
@@ -95,7 +95,7 @@ export function setDefault(value, defaultVal) {
 	return typeof value == 'undefined' ? defaultVal : value
 }
 
-// var setDefault = setDefault
+// let setDefault = setDefault
 
 // Copy of jQuery.extend
 /**
@@ -108,7 +108,7 @@ export function setDefault(value, defaultVal) {
  * @see [jQuery.extend]{@link https://api.jquery.com/jquery.extend/} for more
  *      information, this function uses the same api.
  * @example
- * var objectA = {
+ * let objectA = {
  *     test: "example"
  * };
  *
@@ -123,16 +123,16 @@ export function setDefault(value, defaultVal) {
  * }
  */
 export function extend() {
-	var options,
-		name,
-		src,
-		copy,
-		copyIsArray,
-		clone,
-		target = setDefault(arguments[0], {}),
-		i = 1,
-		length = arguments.length,
-		deep = false
+	let options
+	let name
+	let src
+	let copy
+	let copyIsArray
+	let clone
+	let target = setDefault(arguments[0], {})
+	let i = 1
+	let length = arguments.length
+	let deep = false
 
 	// Handle a deep copy situation
 	if (typeof target === 'boolean') {
@@ -226,17 +226,16 @@ export function extend() {
  * @return {Array|Object}           The value of `obj`
  */
 export function forEach(obj, callback, fromIndex) {
-	var length, i
 	if (obj && Object.prototype.toString.call(obj) === '[object Array]') {
-		length = obj.length
-		i = fromIndex === undefined ? 0 : fromIndex
+		const length = obj.length
+		let i = fromIndex === undefined ? 0 : fromIndex
 		for (; i < length; i++) {
 			if (callback(obj[i], i, obj) === false) {
 				break
 			}
 		}
 	} else {
-		for (i in obj) {
+		for (const i in obj) {
 			if (obj.hasOwnProperty(i)) {
 				if (callback(i, obj[i], obj) === false) {
 					break
@@ -257,19 +256,17 @@ export function forEach(obj, callback, fromIndex) {
  * @return {Array} The filtered array
  */
 export function filter(obj, callback) {
-	var filteredArr = [],
-		length,
-		i
+	let filteredArr = []
+
 	if (obj && Object.prototype.toString.call(obj) === '[object Array]') {
-		length = obj.length
-		i = 0
-		for (; i < length; i++) {
+		const length = obj.length
+		for (let i = 0; i < length; i++) {
 			if (callback(obj[i], i, obj)) {
 				filteredArr.push(obj[i])
 			}
 		}
 	} else {
-		for (i in obj) {
+		for (const i in obj) {
 			if (obj.hasOwnProperty(i)) {
 				if (callback(i, obj[i], obj)) {
 					filteredArr.push(obj[i])

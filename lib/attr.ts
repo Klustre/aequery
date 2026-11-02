@@ -9,8 +9,6 @@
  * @return {Any|undefined} When getting, the value of the attribute. When setting, `undefined`.
  */
 export function attr(array: any[], attributeName: string, newValue: any) {
-	var i, il
-
 	// Throw error if only array is given
 	if (arguments.length === 1) {
 		throw new Error('Only one argument given to attr, must be 2 or 3')
@@ -24,7 +22,7 @@ export function attr(array: any[], attributeName: string, newValue: any) {
 
 		// Set value of attributeName for all objects in array if newValue is given
 	} else {
-		for (i = 0, il = array.length; i < il; i++) {
+		for (let i = 0, il = array.length; i < il; i++) {
 			setAttr(array[i], attributeName, newValue)
 		}
 		return array
@@ -38,7 +36,7 @@ function getAttr(object, attributeName: string) {
 	return object[attributeName]
 }
 
-var attrObj = {
+let attrObj = {
 	setters: {
 		'[object Property]': {
 			value: 'setValue',
@@ -47,12 +45,10 @@ var attrObj = {
 }
 
 function setAttr(object, attributeName: string, newValue: any) {
-	var attrSetters, setter
-
 	// Check if there is a special setter for this object and attributeName
-	attrSetters = attrObj.setters[object.toString()]
+	const attrSetters = attrObj.setters[object.toString()]
 	if (attrSetters !== undefined) {
-		setter = attrSetters[attributeName]
+		const setter = attrSetters[attributeName]
 		if (setter !== undefined) {
 			attributeName = setter
 		}

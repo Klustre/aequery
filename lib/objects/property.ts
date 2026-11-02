@@ -74,10 +74,9 @@ aeqProperty.prototype = {
 	 * @return {Key[]} ArrayEx of selected keys
 	 */
 	selectedKeys: function () {
-		var selectedKeys = []
-
+		let selectedKeys = []
 		// Return key objects for selected keys
-		for (var i = 0; i < this.property.selectedKeys.length; i++) {
+		for (let i = 0; i < this.property.selectedKeys.length; i++) {
 			selectedKeys.push(this.key(this.property.selectedKeys[i]))
 		}
 		return arrayEx(selectedKeys)
@@ -92,7 +91,7 @@ aeqProperty.prototype = {
 	 * @return {Key}         Newly-created key
 	 */
 	addKey: function (time) {
-		var keyIndex = this.property.addKey(time)
+		const keyIndex = this.property.addKey(time)
 		return this.key(keyIndex)
 	},
 
@@ -237,9 +236,9 @@ aeqProperty.prototype = {
 	 * @return {any[]|number[]}    Array of set values, or array of indices of nearest key to `time`
 	 */
 	valuesAtTimes: function (times, values) {
-		var result = [],
-			i = 0,
-			il = times.length
+		const il = times.length
+		let result = []
+		let i = 0
 
 		if (arguments.length === 1) {
 			for (; i < il; i++) {
@@ -265,11 +264,9 @@ aeqProperty.prototype = {
 	 * @param  {Function} callback Function to execute on each key
 	 */
 	forEachKey: function (callback) {
-		var keys = this.getKeys()
-		var length = keys.length,
-			i = 0
-
-		for (; i < length; i++) {
+		const keys = this.getKeys()
+		const length = keys.length
+		for (let i = 0; i < length; i++) {
 			callback(keys[i], keys[i].index, this.property)
 		}
 	},
@@ -291,11 +288,9 @@ aeqProperty.prototype = {
 	 * @return {aeqKey[]} ArrayEx of all keyframes on the property
 	 */
 	getKeys: function () {
-		var keys = []
-		var length = this.property.numKeys,
-			i = 1
-
-		for (; i <= length; i++) {
+		let keys = []
+		const length = this.property.numKeys
+		for (let i = 1; i <= length; i++) {
 			keys.push(this.key(i))
 		}
 		return arrayEx(keys)

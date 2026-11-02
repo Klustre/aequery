@@ -69,7 +69,7 @@ aeqLayer.prototype = {
 			return null
 		}
 
-		var layer = getLayer(this.layer, selector)
+		const layer = getLayer(this.layer, selector)
 
 		if (layer === null) {
 			return null
@@ -116,11 +116,9 @@ aeqLayer.prototype = {
 	 * @return {aeqLayer}         This layer
 	 */
 	forEachEffect: function (callback) {
-		var effects = this.layer.property('ADBE Effect Parade'),
-			length = effects.numProperties,
-			i = 1
-
-		for (; i <= length; i++) {
+		const effects = this.layer.property('ADBE Effect Parade')
+		const length = effects.numProperties
+		for (let i = 1; i <= length; i++) {
 			callback(effects.property(i), i, effects)
 		}
 		return this
@@ -133,7 +131,7 @@ aeqLayer.prototype = {
 	 * @param  {string} effectName Effect name or matchname to add to layer
 	 */
 	addEffect: function (effectName) {
-		var effects = this.layer.property('ADBE Effect Parade')
+		const effects = this.layer.property('ADBE Effect Parade')
 		if (effects.canAddProperty(effectName)) {
 			effects.addProperty(effectName)
 		} else {
@@ -256,8 +254,7 @@ forEach(
 // and need to pass that to a method that takes a Layer object
 forEach(['setParentWithJump', 'moveAfter', 'moveBefore'], function (method) {
 	aeqLayer.prototype[method] = function (selector) {
-		var layer = getLayer(this.layer, selector)
-
+		const layer = getLayer(this.layer, selector)
 		if (layer === null) {
 			return null
 		}
@@ -267,7 +264,7 @@ forEach(['setParentWithJump', 'moveAfter', 'moveBefore'], function (method) {
 })
 
 // Used in aeqLayer.parent, setParentWithJump and move methods
-var regexRelativeIndex = /^(\+|-)=/
+const regexRelativeIndex = /^(\+|-)=/
 
 /* The selector argument can be one of the following:
  * An aeqLayer object
@@ -278,7 +275,8 @@ var regexRelativeIndex = /^(\+|-)=/
  * relative to the current layer
  */
 function getLayer(baseLayer, selector) {
-	var index, offset
+	let index
+	let offset
 
 	// Set the value
 	if (selector instanceof aeqLayer) {
@@ -320,7 +318,7 @@ function getLayer(baseLayer, selector) {
 }
 
 function getRelativeIndex(str) {
-	var offset = str.charAt(0) + str.substr(2)
+	let offset = str.charAt(0) + str.substr(2)
 	offset = parseInt(offset, 10)
 	if (isNaN(offset)) {
 		return false

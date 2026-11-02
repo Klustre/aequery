@@ -23,10 +23,8 @@ const { app, CompItem, Layer, PropertyGroup } = require('aftereffects')
  */
 export function forEachLayer(obj, callback) {
 	if (isComp(obj)) {
-		var length = obj.numLayers,
-			i = 1
-
-		for (; i <= length; i++) {
+		const length = obj.numLayers
+		for (let i = 1; i <= length; i++) {
 			if (callback(obj.layer(i), i, obj) === false) {
 				break
 			}
@@ -56,11 +54,11 @@ export function forEachLayer(obj, callback) {
  */
 export function forEachProperty(obj, callback) {
 	if (isLayer(obj) || isPropertyGroup(obj)) {
-		var properties = getPropertyChildren(obj, {})
+		const properties = getPropertyChildren(obj, {})
 		forEach(properties, callback)
 	} else if (isComp(obj)) {
 		forEachLayer(obj, function (layer) {
-			var properties = getPropertyChildren(layer, {})
+			const properties = getPropertyChildren(layer, {})
 			forEach(properties, callback)
 		})
 	} else if (isArray(obj)) {
@@ -88,12 +86,10 @@ export { forEachProperty as forEachProp }
  *         The function to execute for each effect
  */
 export function forEachEffect(obj, callback) {
-	var i, length, effects
 	if (isLayer(obj)) {
-		effects = obj.property('ADBE Effect Parade')
-		length = effects.numProperties
-
-		for (i = 1; i <= length; i++) {
+		const effects = obj.property('ADBE Effect Parade')
+		const length = effects.numProperties
+		for (let i = 1; i <= length; i++) {
 			if (callback(effects.property(i), i, effects) === false) {
 				break
 			}
@@ -133,10 +129,10 @@ export { forEachComp as forEachComposition }
  *         The function to execute for each item.
  */
 export function forEachItem(callback) {
-	var project = app.project
-	var items = project.items
-	var length = items.length
-	for (var i = 1; i <= length; i++) {
+	const project = app.project
+	const items = project.items
+	const length = items.length
+	for (let i = 1; i <= length; i++) {
 		if (callback(items[i], i, project) === false) {
 			break
 		}
@@ -151,10 +147,10 @@ export function forEachItem(callback) {
  *         The function to execute for each renderQueue Item.
  */
 export function forEachRenderQueueItem(callback) {
-	var renderQueue = app.project.renderQueue
-	var renderQueueItems = renderQueue.items
-	var length = renderQueueItems.length
-	for (var i = 1; i <= length; i++) {
+	const renderQueue = app.project.renderQueue
+	const renderQueueItems = renderQueue.items
+	const length = renderQueueItems.length
+	for (let i = 1; i <= length; i++) {
 		if (callback(renderQueueItems[i], i, renderQueue) === false) {
 			break
 		}
@@ -171,8 +167,8 @@ export { forEachRenderQueueItem as forEachRQItem }
  */
 export function forEachOutputModule(callback) {
 	forEachRenderQueueItem(function (item) {
-		var length = item.outputModules.length
-		for (var i = 1; i <= length; i++) {
+		const length = item.outputModules.length
+		for (let i = 1; i <= length; i++) {
 			if (callback(item.outputModules[i], i, item) === false) {
 				break
 			}

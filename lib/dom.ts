@@ -60,12 +60,11 @@ export function getItems(folder?: typeof FolderItem, deep = true) {
  * @return ArrayEx with Item objects.
  */
 export function getItemsDeep(folder: typeof FolderItem, returnArrayEx = true) {
-	var item,
-		items = [],
-		len = folder.items.length
+	let items = []
+	let len = folder.items.length
 
-	for (var i = 1; i <= len; i++) {
-		item = folder.items[i]
+	for (let i = 1; i <= len; i++) {
+		const item = folder.items[i]
 		if (isFolderItem(item)) {
 			// Add all items in subfolder to the `items` array.
 			items.push.apply(items, getItemsDeep(item, false))
@@ -87,7 +86,7 @@ export function getItemsDeep(folder: typeof FolderItem, returnArrayEx = true) {
  * @return {arrayEx}  Array of Layer objects
  */
 export function getItemInComps(item: typeof Item) {
-	var layers: (typeof Layer)[] = []
+	let layers: (typeof Layer)[] = []
 	forEach(item.usedIn, function (comp) {
 		forEachLayer(comp, function (layer) {
 			if (layer.source === item) {
@@ -106,7 +105,7 @@ export function getItemInComps(item: typeof Item) {
  * @return {arrayEx} Array of CompItems
  */
 export function getCompositions(folder?: typeof FolderItem, deep = true) {
-	var items = getItems(folder, deep)
+	const items = getItems(folder, deep)
 	return items.filter(isComp)
 }
 export { getCompositions as getComps }
@@ -119,7 +118,7 @@ export { getCompositions as getComps }
  * @return {CompItem|null} The active comp, or null if there is none.
  */
 export function getActiveComposition() {
-	var activeItem = app.project.activeItem
+	const activeItem = app.project.activeItem
 	if (isComp(activeItem)) {
 		return activeItem
 	}
@@ -136,15 +135,13 @@ export { getActiveComposition as activeComposition }
  * @return {CompItem|null} The comp with the matching name, or null if none is found
  */
 export function getComposition(name: string) {
-	var length = app.project.items.length
-
-	for (var i = 1; i <= length; i++) {
-		var item = app.project.item(i)
+	const length = app.project.items.length
+	for (let i = 1; i <= length; i++) {
+		const item = app.project.item(i)
 		if (item.name === name && isComp(item)) {
 			return item
 		}
 	}
-
 	// If the function have not returned by now, there is no comp with that name
 	return null
 }
@@ -161,14 +158,14 @@ export { getComposition as getComp }
 export function getLayers(comps: typeof CompItem | (typeof CompItem)[]) {
 	assertIsNotNull(comps, 'comps is null')
 
-	var arr: typeof CompItem | (typeof CompItem)[] = []
+	let arr: typeof CompItem | (typeof CompItem)[] = []
 
 	if (isComp(comps)) {
 		comps = [comps]
 	}
 
-	for (var c = 0; c < comps.length; c++) {
-		var comp = comps[c]
+	for (let i = 0; i < comps.length; i++) {
+		const comp = comps[i]
 		arr = arr.concat(normalizeCollection(comp.layers))
 	}
 
@@ -208,7 +205,7 @@ export function getSelectedLayersOrAll(comp?: typeof CompItem) {
 		}
 	}
 
-	var layers = getSelectedLayers(comp)
+	const layers = getSelectedLayers(comp)
 
 	if (layers.length === 0) {
 		return getLayers(comp)
@@ -251,10 +248,10 @@ export { getSelectedProperties as getSelectedProps }
 export function getProperties(layers: (typeof Layer)[], options) {
 	assertIsNotNull(layers, 'argument layers is null')
 
-	var arr = []
+	let arr = []
 
-	for (var l = 0; l < layers.length; l++) {
-		var layer = layers[l]
+	for (let l = 0; l < layers.length; l++) {
+		const layer = layers[l]
 		arr = arr.concat(getPropertyChildren(layer, options))
 	}
 
@@ -277,13 +274,12 @@ export function getPropertyChildren(
 	propertyParent: typeof Layer | typeof PropertyGroup,
 	options,
 ) {
-	var arr = []
-	var property
-	var len = propertyParent.numProperties
 	options = setDefault(options, { separate: false })
+	const len = propertyParent.numProperties
+	let arr = []
 
-	for (var i = 1; i <= len; i++) {
-		property = propertyParent.property(i)
+	for (let i = 1; i <= len; i++) {
+		let property = propertyParent.property(i)
 
 		switch (property.propertyType) {
 			case PropertyType.PROPERTY:
@@ -326,18 +322,18 @@ export function getEffects(layers: typeof Layer | (typeof Layer)[]) {
 		layers = [layers]
 	}
 
-	var arr = []
-	var len = layers.length
-	var effects, effectslen
+	const len = layers.length
+	let effectslen
+	let arr = []
 
-	for (var l = 0; l < len; l++) {
-		effects = layers[l].property('ADBE Effect Parade')
+	for (let l = 0; l < len; l++) {
+		const effects = layers[l].property('ADBE Effect Parade')
 		if (effects === null) {
 			continue
 		}
 
 		effectslen = effects.numProperties
-		for (var e = 1; e <= effectslen; e++) {
+		for (let e = 1; e <= effectslen; e++) {
 			arr.push(effects.property(e))
 		}
 	}
@@ -379,18 +375,16 @@ export function getMarkerGroup(obj?: typeof Layer | typeof CompItem) {
  * @return {arrayEx} Array of aeqKey objects.
  */
 export function getKeys(property: typeof Property | (typeof Property)[]) {
-	var arr = [],
-		i,
-		len
+	let arr = []
 
 	if (isArray(property)) {
-		for (i = 0, len = property.length; i < len; i++) {
+		for (let i = 0, len = property.length; i < len; i++) {
 			arr = arr.concat(getKeys(property[i]))
 		}
 		return arrayEx(arr)
 	}
 
-	for (i = 1, len = property.numKeys; i <= len; i++) {
+	for (let i = 1, len = property.numKeys; i <= len; i++) {
 		arr.push(aeqKey(property, i))
 	}
 
@@ -399,7 +393,6 @@ export function getKeys(property: typeof Property | (typeof Property)[]) {
 
 // TODO: Document function and add types
 export function getChildren(obj) {
-	var ret
 	if (isComp(obj)) {
 		return normalizeCollection(obj.layers)
 	}
@@ -407,7 +400,7 @@ export function getChildren(obj) {
 		return getPropertyChildren(obj, {})
 	}
 	if (isArray(obj)) {
-		ret = arrayEx()
+		let ret = arrayEx()
 		forEach(obj, function (item) {
 			ret.push.apply(ret, getChildren(item))
 		})
@@ -426,8 +419,8 @@ export function getChildren(obj) {
 export function normalizeCollection(collection: typeof Collection) {
 	// Because collection objects have a range [1...length], which is not ideal.
 	// This returns an array with all objects in the collection.
-	var ret = Array.prototype.slice.call(collection, 1)
-	var len = collection.length
+	let ret = Array.prototype.slice.call(collection, 1)
+	const len = collection.length
 
 	// Because the last object is at index Collection.length and slice only goes up to
 	// length - 1, we have to push the last object to the return value

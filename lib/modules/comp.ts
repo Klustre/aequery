@@ -22,18 +22,18 @@ const { app, CompItem, RenderQueueItem, FolderItem } = require('aftereffects')
  * @example <caption>Create a comp in the project root, with name "Example",
  *          and a duration of 10 seconds. And use default values for the
  *          other options</caption>
- * var comp = create({
+ * const comp = create({
  *     name: 'Example',
  *     duration: 10
  * })
  *
  * @example <caption>Create comp in a folder, with name "Example"</caption>
- * var comp = create(compFolder, {
+ * const comp = create(compFolder, {
  *     name: "Example"
  * })
  *
  * @example <caption>Create a comp with all default values</caption>
- * var comp = create()
+ * const comp = create()
  */
 export function create(folder, options) {
 	if (!isFolderItem(folder)) {
@@ -42,7 +42,7 @@ export function create(folder, options) {
 	}
 
 	// TODO: Find a way to use the last used settings, or find some defaults
-	var defaultOptions = {
+	let defaultOptions = {
 		name: 'Comp',
 		width: 1920,
 		height: 1080,
@@ -73,10 +73,10 @@ export { create as createComp }
  *
  * @example
  * <caption>Get all `RenderQueueItem`s that references the comp.</caption>
- * var RQItems = getCompInQueue( comp, false )
+ * const RQItems = getCompInQueue( comp, false )
  */
 export function getCompInQueue(comp: typeof CompItem, queuedOnly = true) {
-	var queuedItems: (typeof RenderQueueItem)[] = queuedOnly
+	const queuedItems: (typeof RenderQueueItem)[] = queuedOnly
 		? getQueuedItems()
 		: getRQItems()
 
@@ -98,7 +98,7 @@ export function isInQueue(comp: typeof CompItem) {
 		return false
 	}
 
-	var items = getRQItems()
+	const items = getRQItems()
 
 	return items.some(function (item) {
 		return item.comp.id === comp.id

@@ -58,7 +58,7 @@ aeqKey.prototype = {
 		}
 
 		// Get the keyIndex nearest to the keyTime
-		var newIndex = this.property.nearestKeyIndex(this.originalTime)
+		const newIndex = this.property.nearestKeyIndex(this.originalTime)
 
 		// The time of the nearest keyIndex could be something else if the original key
 		// was deleted, so we need to check it
@@ -312,7 +312,7 @@ aeqKey.prototype = {
 	 */
 	getKeyInfo: function () {
 		this.checkKey()
-		var keyInfo = {
+		let keyInfo = {
 			property: this.property,
 			interpolationType: this.interpolationType(),
 			value: this.value(),
@@ -361,7 +361,7 @@ aeqKey.prototype = {
 	 * @return {aeqKey}                        New key
 	 */
 	copyTo: function (targetProp, time, offset) {
-		var keyInfo = this.getKeyInfo()
+		let keyInfo = this.getKeyInfo()
 		keyInfo.time = time === undefined ? keyInfo.time : time
 		offset = offset === undefined ? 0 : offset
 		keyInfo.time += offset
@@ -380,14 +380,14 @@ aeqKey.prototype = {
 	 * @param  {number} time New key time
 	 */
 	moveTo: function (time) {
-		var thisTime = this.time()
+		const thisTime = this.time()
 
 		// Keyframe should not be moved
 		if (time === thisTime) {
 			return
 		}
 
-		var newKey = this.copyTo(this.property, time)
+		const newKey = this.copyTo(this.property, time)
 		this.remove()
 
 		this.index = this.property.nearestKeyIndex(newKey.time())
@@ -418,9 +418,9 @@ forEach(
 		'value',
 	],
 	function (type) {
-		var typeCapitalized = type.charAt(0).toUpperCase() + type.slice(1)
-		var getter = 'key' + typeCapitalized
-		var setter = 'set' + typeCapitalized + 'AtKey'
+		const typeCapitalized = type.charAt(0).toUpperCase() + type.slice(1)
+		const getter = 'key' + typeCapitalized
+		const setter = 'set' + typeCapitalized + 'AtKey'
 
 		aeqKey.prototype[type] = function () {
 			this.checkKey()
@@ -443,8 +443,8 @@ forEach(
  * @return {aeqKey} New key
  */
 export function pasteKey(keyInfo) {
-	var keyIndex = keyInfo.property.addKey(keyInfo.time)
-	var key = new aeqKey(keyInfo.property, keyIndex)
+	const keyIndex = keyInfo.property.addKey(keyInfo.time)
+	const key = new aeqKey(keyInfo.property, keyIndex)
 
 	if (
 		keyInfo.property.value.length === 2 &&
@@ -452,7 +452,7 @@ export function pasteKey(keyInfo) {
 		keyInfo.value.length === 3
 	) {
 		keyInfo.value = [keyInfo.value[0], keyInfo.value[1]]
-		var spatialTangent = keyInfo.spatialTangent
+		const spatialTangent = keyInfo.spatialTangent
 		keyInfo.spatialTangent = {
 			inTangent: [
 				spatialTangent.inTangent[0],

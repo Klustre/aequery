@@ -62,14 +62,12 @@ export { get as getSetting }
  * @return {boolean|undefined}  Saved setting as boolean
  */
 export function getAsBool(sectionName: string, keyName: string) {
-	var value = get(sectionName, keyName)
-
+	const value = get(sectionName, keyName)
 	if (value === 'true') {
 		return true
 	} else if (value === 'false') {
 		return false
 	}
-
 	return undefined
 }
 export { getAsBool as getSettingAsBool }
@@ -149,15 +147,12 @@ export function unpack(
 	sectionName: string,
 	keyNames: string[] | Record<string, string>,
 ) {
-	var ret
-
 	// TODO: Looks like a bug. If keyNames is not of type Object it will be ignored.
 	// It should instead throw an error when keyNames is not of the expected type.
 
 	// Argument keyNames can either be an array with keyNames or an object with
 	// key: defaultValue pairs.
-	ret = isObject(keyNames) ? keyNames : {}
-
+	let ret = isObject(keyNames) ? keyNames : {}
 	forEach(keyNames, function (keyName) {
 		if (app.settings.haveSetting(sectionName, keyName)) {
 			ret[keyName] = app.settings.getSetting(sectionName, keyName)

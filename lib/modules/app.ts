@@ -55,7 +55,7 @@ export { getAEP as getProjectFilePath }
  */
 export function getAEPDir() {
 	throw new Error('TODO: Migrate to UXP')
-	// var aepFile = getAEP()
+	// let aepFile = getAEP()
 
 	// if (!aepFile) {
 	// 	return null
@@ -71,7 +71,7 @@ export { getAEPDir as getProjectFileParentPath }
  */
 export function getAEPName() {
 	throw new Error('TODO: Migrate to UXP')
-	// var aepFile = getAEP()
+	// let aepFile = getAEP()
 	// if (!aepFile) {
 	// 	return null
 	// }
@@ -87,8 +87,8 @@ export { getAEPName as getProjectFileName }
  */
 export function getPresetsPaths() {
 	throw new Error('TODO: Migrate to UXP')
-	// var appVersion = app.version
-	// var versionPrettyName = ''
+	// let appVersion = app.version
+	// let versionPrettyName = ''
 
 	// if (parseInt(appVersion) === 11) {
 	// 	versionPrettyName = 'CS6'
@@ -129,7 +129,9 @@ export function ensureSecurityPrefEnabled() {
 		}
 
 		if (!securityPrefEnabled()) {
-			throw new Error("Security preference is not enabled! Can't continue.")
+			throw new Error(
+				"Security preference is not enabled! Can't continue.",
+			)
 		}
 	}
 }
@@ -142,7 +144,7 @@ export function ensureSecurityPrefEnabled() {
  */
 export function open(filePath) {
 	throw new Error('TODO: Migrate to UXP')
-	// var file = getFile(filePath)
+	// let file = getFile(filePath)
 
 	// if (file) {
 	// 	return app.open(file)

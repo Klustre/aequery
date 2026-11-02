@@ -70,7 +70,7 @@ export { type as getPropertyType }
  * @return {Layer} The containing Layer object.
  */
 export function getLayer(property: typeof Property) {
-	var depth = property.propertyDepth
+	const depth = property.propertyDepth
 	return property.propertyGroup(depth)
 }
 export { getLayer as getLayerFromProperty }

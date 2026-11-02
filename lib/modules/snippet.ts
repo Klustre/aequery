@@ -15,7 +15,7 @@ import { arrayEx } from '../objects/array.ts'
  *         function returns is returned.
  */
 export function activeComp(undoGroup, callback) {
-	var comp = getCompWithAlert()
+	const comp = getCompWithAlert()
 	if (comp === null) {
 		return false
 	}
@@ -35,11 +35,11 @@ export function activeComp(undoGroup, callback) {
  * returns is returned.
  */
 export function selectedLayers(undoGroup, callback) {
-	var comp = getCompWithAlert()
+	const comp = getCompWithAlert()
 	if (comp === null) {
 		return false
 	}
-	var layers = getSelectedLayersWithAlert(comp)
+	let layers = getSelectedLayersWithAlert(comp)
 	if (layers === null) {
 		return false
 	}
@@ -61,11 +61,11 @@ export function selectedLayers(undoGroup, callback) {
  * no comp was open. Else the value the `callback` function is returned.
  */
 export function selectedLayersOrAll(undoGroup, callback) {
-	var comp = getCompWithAlert()
+	const comp = getCompWithAlert()
 	if (comp === null) {
 		return false
 	}
-	var layers = getSelectedLayersOrAll(comp)
+	let layers = getSelectedLayersOrAll(comp)
 
 	layers = arrayEx(layers)
 	return createUndoGroup(undoGroup, callback, [layers, comp])
@@ -86,11 +86,11 @@ export { selectedLayersOrAll as selectedOrAllLayers }
  * function is returned.
  */
 export function selectedProperties(undoGroup, callback) {
-	var comp = getCompWithAlert()
+	const comp = getCompWithAlert()
 	if (comp === null) {
 		return false
 	}
-	var props = getSelectedPropertiesWithAlert(comp)
+	let props = getSelectedPropertiesWithAlert(comp)
 	if (props === null) {
 		return false
 	}
@@ -185,7 +185,7 @@ export function setOrGetDefault(value, defaultVal) {
 }
 
 function getCompWithAlert() {
-	var comp = getActiveComposition()
+	const comp = getActiveComposition()
 	if (comp === null) {
 		alert('No Comp selected')
 	}

@@ -97,10 +97,9 @@ const { CompItem, FolderItem, Layer, PropertyGroup } = require('aftereffects')
  */
 // TODO: Fix complexity of this function
 export function select(selector, context) {
-	var results = []
-
-	var parsedSelector = cssselector.parse(selector)
-	var parts = parsedSelector
+	let results = []
+	let parsedSelector = cssselector.parse(selector)
+	let parts = parsedSelector
 
 	if (context !== undefined) {
 		if (isString(context)) {
@@ -112,11 +111,11 @@ export function select(selector, context) {
 		}
 	}
 
-	var part
+	let part
 
 	while (parts.length > 0) {
 		part = parts[0]
-		var unshifted = false
+		let unshifted = false
 
 		switch (part.type) {
 			case 'activecomp':
@@ -222,9 +221,10 @@ export function select(selector, context) {
 	}
 
 	function filter(obj) {
-		var ret = true,
-			len,
-			pseudo
+		let ret = true
+		let len
+		let pseudo
+
 		if (part.props !== null) {
 			if (!hasAllAttributes(obj, part.props, false)) {
 				return false
@@ -235,7 +235,7 @@ export function select(selector, context) {
 		}
 		len = part.pseudo.length
 
-		for (var i = 0; i < len; i++) {
+		for (let i = 0; i < len; i++) {
 			pseudo = part.pseudo[i]
 
 			if (pseudo.type === 'not' || pseudo.type === 'isnot') {
@@ -255,8 +255,8 @@ export function select(selector, context) {
 }
 
 function hasAllAttributes(obj, attributes, not) {
-	var attributeValue
-	for (var attribute in attributes) {
+	let attributeValue
+	for (let attribute in attributes) {
 		if (!attributes.hasOwnProperty(attribute)) {
 			continue
 		}
@@ -271,7 +271,7 @@ function hasAllAttributes(obj, attributes, not) {
 			)
 		}
 
-		var isSame = compare(attributeValue, obj[attribute])
+		let isSame = compare(attributeValue, obj[attribute])
 
 		// Return false if it is the same and it should not be,
 		// or if it isn't the same and it should be
@@ -295,7 +295,7 @@ function compare(value, attribute) {
 
 function valueInArray(value, attribute) {
 	// Check if value is in array
-	for (var i = 0, il = value.value.length; i < il; i++) {
+	for (let i = 0, il = value.value.length; i < il; i++) {
 		if (compare(value.value[i], attribute)) {
 			return true
 		}

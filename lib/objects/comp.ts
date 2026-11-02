@@ -46,10 +46,8 @@ aeqComp.prototype = {
 	 * @param  {Function} callback Function to run on each layer in aeqComp object
 	 */
 	forEachLayer: function (callback) {
-		var length = this.comp.numLayers,
-			i = 1
-
-		for (; i <= length; i++) {
+		const length = this.comp.numLayers
+		for (let i = 1; i <= length; i++) {
 			callback(this.comp.layer(i), i, this)
 		}
 	},

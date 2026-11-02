@@ -15,7 +15,7 @@ export function createUndoGroup(name: string, callback, args: any | any[]) {
 	if (!isArray(args)) {
 		args = [args]
 	}
-	var value = callback.apply(null, args)
+	const value = callback.apply(null, args)
 	app.endUndoGroup()
 	return value
 }

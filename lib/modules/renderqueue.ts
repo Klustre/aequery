@@ -27,8 +27,7 @@ export function queue(item: typeof Item | typeof CompItem) {
  * @method
  */
 export function unqueueAll() {
-	var items = getRQItems()
-
+	const items = getRQItems()
 	items.forEach(function (item) {
 		if (
 			item.status !== RQItemStatus.USER_STOPPED &&
@@ -46,7 +45,7 @@ export function unqueueAll() {
  * @method
  */
 export function clear() {
-	var items = getRQItems()
+	let items = getRQItems()
 	items = items.reverse()
 	items.forEach(function (item) {
 		item.remove()
@@ -71,7 +70,7 @@ export function isQueued(rqItem: typeof RenderQueueItem) {
  * @return {arrayEx} ArrayEx of `RenderQueueItem`s
  */
 export function getQueuedItems() {
-	var items = getRQItems()
+	const items = getRQItems()
 	return items.filter(function (item) {
 		return isQueued(item)
 	})
@@ -83,13 +82,13 @@ export function getQueuedItems() {
  * @return {arrayEx} ArrayEx of `CompItem`s
  */
 export function getQueuedComps() {
-	var queuedItems = getQueuedItems()
-	var compIDs: Record<number, boolean> = {}
-	var comps: (typeof CompItem)[] = []
+	const queuedItems = getQueuedItems()
+	let compIDs: Record<number, boolean> = {}
+	let comps: (typeof CompItem)[] = []
 
 	queuedItems.forEach(function (item) {
-		var comp = item.comp
-		var compID = comp.id
+		const comp = item.comp
+		const compID = comp.id
 
 		if (compIDs[compID] === undefined) {
 			compIDs[compID] = true
@@ -116,13 +115,13 @@ export { getRQItems as getRenderQueueItems }
  * @return {arrayEx} ArrayEx of CompItems in the render queue.
  */
 export function getRQComps() {
-	var rqItems = getRQItems()
-	var compIDs: Record<number, boolean> = {}
-	var comps: (typeof CompItem)[] = []
+	const rqItems = getRQItems()
+	let compIDs: Record<number, boolean> = {}
+	let comps: (typeof CompItem)[] = []
 
 	rqItems.forEach(function (item) {
-		var comp = item.comp
-		var compID = comp.id
+		const comp = item.comp
+		const compID = comp.id
 
 		if (compIDs[compID] === undefined) {
 			compIDs[compID] = true
@@ -170,14 +169,12 @@ export function ensureRenderPathExists(outputModule: typeof OutputModule) {
  * @return `true` if the output module template exists.
  */
 export function omTemplateExists(templateName: string) {
-	var tempComp = create()
-	var tempRQItem = queue(tempComp)
-	var templates = arrayEx(tempRQItem.outputModule(1).templates)
-
-	var templateExists = templates.some(function (template) {
+	const tempComp = create()
+	const tempRQItem = queue(tempComp)
+	const templates = arrayEx(tempRQItem.outputModule(1).templates)
+	const templateExists = templates.some(function (template) {
 		return template === templateName
 	})
-
 	tempRQItem.remove()
 	tempComp.remove()
 	return templateExists
@@ -191,14 +188,12 @@ export { omTemplateExists as outputModuleTemplateExists }
  * @return `true` if the template exists.
  */
 export function rqTemplateExists(templateName: string) {
-	var tempComp = create()
-	var tempRQItem = queue(tempComp)
-	var templates = arrayEx(tempRQItem.templates)
-
-	var templateExists = templates.some(function (template) {
+	const tempComp = create()
+	const tempRQItem = queue(tempComp)
+	const templates = arrayEx(tempRQItem.templates)
+	const templateExists = templates.some(function (template) {
 		return template === templateName
 	})
-
 	tempRQItem.remove()
 	tempComp.remove()
 	return templateExists
