@@ -419,14 +419,15 @@ export function getChildren(obj) {
 export function normalizeCollection(collection: typeof Collection) {
 	// Because collection objects have a range [1...length], which is not ideal.
 	// This returns an array with all objects in the collection.
-	let ret = Array.prototype.slice.call(collection, 1)
 	const len = collection.length
+	const ret = []
 
-	// Because the last object is at index Collection.length and slice only goes up to
-	// length - 1, we have to push the last object to the return value
-	if (len !== 0) {
-		ret.push(collection[len])
+	// Loops over the collection because `Array.slice` can't access
+	// the Proxy's target array via the internal `get` method
+	for (let i = 1; i <= len; i++) {
+		ret.push(collection[i])
 	}
+
 	return arrayEx(ret)
 }
 

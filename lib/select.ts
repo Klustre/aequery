@@ -1,4 +1,4 @@
-import { cssselector } from './parser/parser.ts'
+import { cssselector } from './parser/parser.js'
 import {
 	getActiveComposition,
 	getCompositions,
@@ -268,7 +268,10 @@ function hasAllAttributes(obj, attributes, not) {
 		}
 		attributeValue = attributes[attribute]
 
-		if (!obj.hasOwnProperty(attribute)) {
+		// Because `Object.hasOwnProperty` cannot access the
+		// internal `getOwnProperty` method on the AE Proxy
+		// Same issue as with `Array.slice`, see `normalizeCollection`
+		if (obj[attribute] === undefined && !(attribute in obj)) {
 			throw new Error(
 				'The attribute ' +
 					attribute +
