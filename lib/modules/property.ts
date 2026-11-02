@@ -1,5 +1,3 @@
-import { valueInObject } from '../misc/valueInObject.ts'
-
 const {
 	PropertyType,
 	Property,
@@ -74,3 +72,21 @@ export function getLayer(property: typeof Property) {
 	return property.propertyGroup(depth)
 }
 export { getLayer as getLayerFromProperty }
+
+/**
+ * [description]
+ * @method
+ * @param  {type} value [description]
+ * @param  {type} obj   [description]
+ * @return {type}       [description]
+ */
+export function valueInObject(value, obj) {
+	for (let key in obj) {
+		if (obj.hasOwnProperty(key)) {
+			if (value === obj[key]) {
+				return key
+			}
+		}
+	}
+	return undefined
+}
