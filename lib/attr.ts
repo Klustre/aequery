@@ -3,15 +3,12 @@
  * value, it only returns the valure from the first object.
  * @see arrayEx.attr
  * @method
- * @param  {Any[]}  array         The array of objects to get or set attribute
- *                                values of.
- * @param  {string} attributeName The name of the attribute to get or set.
- * @param  {Any}    [newValue]    The value to set. If not given, will only get
- *                                the value of the first object.
- * @return {Any|undefined}        When getting, the value of the attribute.
- *                                When setting, `undefined`.
+ * @param array The array of objects to get or set attribute values of.
+ * @param attributeName The name of the attribute to get or set.
+ * @param newValue The value to set. If not given, will only get the value of the first object.
+ * @return {Any|undefined} When getting, the value of the attribute. When setting, `undefined`.
  */
-export function attr(array, attributeName, newValue) {
+export function attr(array: any[], attributeName: string, newValue: any) {
 	var i, il
 
 	// Throw error if only array is given
@@ -34,7 +31,7 @@ export function attr(array, attributeName, newValue) {
 	}
 }
 
-function getAttr(object, attributeName) {
+function getAttr(object, attributeName: string) {
 	if (object[attributeName] instanceof Function) {
 		return object[attributeName]()
 	}
@@ -49,7 +46,7 @@ var attrObj = {
 	},
 }
 
-function setAttr(object, attributeName, newValue) {
+function setAttr(object, attributeName: string, newValue: any) {
 	var attrSetters, setter
 
 	// Check if there is a special setter for this object and attributeName

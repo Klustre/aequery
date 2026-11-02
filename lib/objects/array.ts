@@ -1,5 +1,5 @@
 import { attr } from '../attr.ts'
-import { extend, setDefault } from '../main.ts'
+import { extend } from '../main.ts'
 
 /**
  * Array with some extensions that mimics modern JavaScript.
@@ -283,9 +283,7 @@ var arrayExObj = {
 	},
 }
 
-export function arrayEx(arr) {
-	arr = setDefault(arr, [])
-
+export function arrayEx(arr = []) {
 	if (arr._init) {
 		return arr
 	}

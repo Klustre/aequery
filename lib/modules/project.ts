@@ -25,38 +25,40 @@ const {
 /**
  * Gets all footage items in project
  * @method
- * @param  {FolderItem|string} [parentFolder=app.project.root] Folder to search
- * in by name or item, or root if undefined
+ * @param parentFolder Folder to search in by name or item, or root if undefined
  * @return {FootageItem[]} ArrayEx of project footage items
  */
-export function getFootage(parentFolder) {
+export function getFootage(
+	parentFolder: typeof FolderItem | string = app.project.rootFolder,
+) {
 	var items = getItems(parentFolder)
-
 	return items.filter(isFootageItem)
 }
 
 /**
  * Gets all folders within target folder, or root
  * @method
- * @param  {FolderItem|string} [parentFolder=app.project.root] Folder to search
- * in by name or item, or root if undefined
- * @return {FolderItem[]}      ArrayEx of folder items
+ * @param parentFolder Folder to search in by name or item, or root if undefined
+ * @return {FolderItem[]} ArrayEx of folder items
  */
-export function getFolders(parentFolder) {
+export function getFolders(
+	parentFolder: typeof FolderItem | string = app.project.rootFolder,
+) {
 	var folders = getItems(parentFolder)
-
 	return folders.filter(isFolderItem)
 }
 
 /**
  * Find folder by name in target folder.
  * @method
- * @param  {string} name       Folder name to find.
- * @param  {FolderItem|string} [parentFolder=app.project.root]
- * Folder to search in by name or item, or root if undefined.
- * @return {FolderItem|null}   FolderItem with the name. Or `null` if not found.
+ * @param name Folder name to find.
+ * @param parentFolder Folder to search in by name or item, or root if undefined.
+ * @return {FolderItem|null} FolderItem with the name. Or `null` if not found.
  */
-export function findFolder(name, parentFolder) {
+export function findFolder(
+	name: string,
+	parentFolder: typeof FolderItem | string = app.project.rootFolder,
+) {
 	var folders = getFolders(parentFolder)
 
 	var folder = filter(folders, function (folder) {
@@ -71,12 +73,14 @@ export function findFolder(name, parentFolder) {
 /**
  * Gets folder item, or null if can't find
  * @method
- * @param  {FolderItem|string} folder Folder to get by name or item, or root if undefined
- * @param  {FolderItem|string} [parentFolder=app.project.root]
- * Parent folder to search in by name or item, or root if undefined
- * @return {FolderItem|null}   Target folder item, or null
+ * @param folder Folder to get by name or item, or root if undefined
+ * @param parentFolder Parent folder to search in by name or item, or root if undefined
+ * @return Target folder item, or null
  */
-export function getFolder(folder, parentFolder) {
+export function getFolder(
+	folder: typeof FolderItem | string,
+	parentFolder: typeof FolderItem | string = app.project.rootFolder,
+) {
 	if (isFolderItem(folder)) {
 		return folder
 	}
@@ -115,7 +119,6 @@ export function getSelectedCompsOrAll() {
 	if (isEmpty(app.project.selection)) {
 		return getCompositions()
 	}
-
 	return getSelectedComps()
 }
 export { getSelectedCompsOrAll as getSelectedOrAllComps }
@@ -132,12 +135,14 @@ export function getSelectedFootage() {
 /**
  * Gets folder item, or creates it if can't find
  * @method
- * @param  {FolderItem|string} folder Folder to get by name or item, or root if undefined
- * @param  {FolderItem|string} [parentFolder=app.project.root]
- * Parent folder to search in by name or item, or root if undefined
- * @return {FolderItem}        Target folder item
+ * @param folder Folder to get by name or item, or root if undefined
+ * @param parentFolder Parent folder to search in by name or item, or root if undefined
+ * @return {FolderItem} Target folder item
  */
-export function getOrCreateFolder(folder, parentFolder) {
+export function getOrCreateFolder(
+	folder: typeof FolderItem | string,
+	parentFolder?: typeof FolderItem | string,
+) {
 	if (isNullOrUndefined(parentFolder)) {
 		parentFolder = app.project.rootFolder
 	} else {
@@ -156,11 +161,10 @@ export function getOrCreateFolder(folder, parentFolder) {
 /**
  * Gets folder item, or root if undefined
  * @method
- * @param  {FolderItem|string} [folder=app.project.root]
- * Folder to get by name or item, or root if undefined
- * @return {FolderItem}        Target folder item
+ * @param folder Folder to get by name or item, or root if undefined
+ * @return {FolderItem} Target folder item
  */
-export function getFolderOrRoot(folder) {
+export function getFolderOrRoot(folder?: typeof FolderItem | string) {
 	folder = getFolder(folder)
 
 	if (isNullOrUndefined(folder)) {
@@ -173,10 +177,10 @@ export function getFolderOrRoot(folder) {
 /**
  * Saves current AEP to target path, or prompts user if no path
  * @method
- * @param  {string} [path] Path to save AEP to
- * @return {File}          File object of AEP
+ * @param path Path to save AEP to
+ * @return Path of AEP
  */
-export function save(path) {
+export function save(path?: string) {
 	throw new Error('TODO: Migrate to UXP')
 	// if (!path) {
 	// 	return app.project.save()
@@ -196,7 +200,7 @@ export function save(path) {
 /**
  * Saves current AEP to current path
  * @method
- * @return {File} File object of AEP
+ * @return Path of AEP
  */
 export function quickSave() {
 	var file = getAEP()
@@ -262,22 +266,23 @@ export function importFile(file, folder, options) {
  * @param  {boolean} [options.sequence=false] `true` if file should import as sequence
  * @return {Item}    The imported item
  */
-export function simpleImportFile(file, options) {
-	var iO = new ImportOptions(file)
+export function simpleImportFile(file, options?) {
+	throw new Error('TODO: Migrate to UXP')
+	// var iO = new ImportOptions(file)
 
-	options = setDefault(options, {})
-	if (options.sequence === true) {
-		iO.sequence = true
-	}
+	// options = setDefault(options, {})
+	// if (options.sequence === true) {
+	// 	iO.sequence = true
+	// }
 
-	var newItem
-	try {
-		newItem = app.project.importFile(iO)
-	} catch (e) {
-		throw new Error("Can't import file " + file.name + '\n' + String(e))
-	}
+	// var newItem
+	// try {
+	// 	newItem = app.project.importFile(iO)
+	// } catch (e) {
+	// 	throw new Error("Can't import file " + file.name + '\n' + String(e))
+	// }
 
-	return newItem
+	// return newItem
 }
 
 /**
@@ -314,10 +319,13 @@ export function importFiles(fileArray, folder, options) {
 /**
  * Moves item(s) to specified folder
  * @method
- * @param  {Item|Item[]} items Item or array of items
- * @param  {FolderItem} folder Folder to move item(s) to
+ * @param items Item or array of items
+ * @param folder Folder to move item(s) to
  */
-export function moveToFolder(items, folder) {
+export function moveToFolder(
+	items: typeof Item | (typeof Item)[],
+	folder: typeof FolderItem,
+) {
 	folder = getFolder(folder)
 
 	if (!isArray(items)) {

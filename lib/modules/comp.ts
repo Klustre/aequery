@@ -67,26 +67,18 @@ export { create as createComp }
 /**
  * Gets the `RenderQueueItem`s that references a given comp.
  * @method
- * @param  {CompItem} comp   The comp to find in the Render Queue.
- * @param  {boolean} [queuedOnly=true]   Only get `RenderQueueItem`s that
- *                                       are queued.
- * @return {RenderQueueItem[]}    The `RenderQueueItem`s that references
- *                                the comp
+ * @param comp The comp to find in the Render Queue.
+ * @param queuedOnly Only get `RenderQueueItem`s that are queued.
+ * @return {RenderQueueItem[]} The `RenderQueueItem`s that references the comp
  *
- * @example <caption>Get all `RenderQueueItem`s that references
- *          the comp.</caption>
+ * @example
+ * <caption>Get all `RenderQueueItem`s that references the comp.</caption>
  * var RQItems = getCompInQueue( comp, false )
  */
-export function getCompInQueue(comp, queuedOnly) {
-	if (isNullOrUndefined(queuedOnly)) queuedOnly = true
-
-	var queuedItems
-
-	if (queuedOnly) {
-		queuedItems = getQueuedItems()
-	} else {
-		queuedItems = getRQItems()
-	}
+export function getCompInQueue(comp: typeof CompItem, queuedOnly = true) {
+	var queuedItems: (typeof RenderQueueItem)[] = queuedOnly
+		? getQueuedItems()
+		: getRQItems()
 
 	return filter(queuedItems, function (item) {
 		return item.comp.id === comp.id
@@ -97,12 +89,13 @@ export function getCompInQueue(comp, queuedOnly) {
  * Check if a comp is in the Render Queue, regardless of it being
  * queued or not.
  * @method
- * @param  {CompItem} comp The comp to find in the queue.
- * @return {boolean}   True if comp is in the queue.
+ * @param comp The comp to find in the queue.
+ * @return True if comp is in the queue.
  */
-export function isInQueue(comp) {
+export function isInQueue(comp: typeof CompItem) {
 	if (!isComp(comp)) {
-		return null
+		// TODO: Should throw an error instead
+		return false
 	}
 
 	var items = getRQItems()
@@ -116,10 +109,10 @@ export { isInQueue as isCompInQueue }
 /**
  * Check if a comp is in the Render Queue and queued.
  * @method
- * @param  {CompItem} comp The comp to find the queue.
- * @return {boolean}     True if the comp is queued.
+ * @param comp The comp to find the queue.
+ * @return True if the comp is queued.
  */
-export function isQueued(comp) {
+export function isQueued(comp: typeof CompItem) {
 	return getCompInQueue(comp, true).length > 0
 }
 export { isQueued as isCompQueued }

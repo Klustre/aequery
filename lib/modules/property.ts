@@ -10,8 +10,8 @@ const {
 /**
  * Returns the property value type of a Property as a string.
  * @method
- * @param  {Property} property The property to get the value type of.
- * @return {string}          The property value type, on of:
+ * @param property The property to get the value type of.
+ * @return The property value type, on of:
  *
  * - `NO_VALUE`: Stores no data.
  * - `ThreeD_SPATIAL`: Array of three floating-point positional values.
@@ -36,7 +36,7 @@ const {
  * @example <caption>Returns "ThreeD_SPATIAL"</caption>
  * valueType( layer.Transform.Position )
  */
-export function valueType(property) {
+export function valueType(property: typeof Property) {
 	return valueInObject(
 		property.propertyValueType || property,
 		PropertyValueType,
@@ -47,8 +47,8 @@ export { valueType as getPropertyValueType }
 /**
  * Returns the property type as a string.
  * @method
- * @param  {Property} property The property to get the type of
- * @return {string}          The property type, on of:
+ * @param property The property to get the type of
+ * @return The property type, on of:
  *
  * - `PROPERTY`: A single property such as position or zoom.
  * - `INDEXED_GROUP`: A property group whose members have an editable name
@@ -58,7 +58,7 @@ export { valueType as getPropertyValueType }
  * - `NAMED_GROUP`: A property group in which the member names are not
  *    editable. Layers are named groups.
  */
-export function type(property) {
+export function type(property: typeof Property) {
 	return valueInObject(property.propertyType || property, PropertyType)
 }
 export { type as getPropertyType }
@@ -66,10 +66,10 @@ export { type as getPropertyType }
 /**
  * Gets the layer the given property is contained in.
  * @method
- * @param  {Property} property The Property to get layer from.
- * @return {Layer}          The containing Layer object.
+ * @param property The Property to get layer from.
+ * @return {Layer} The containing Layer object.
  */
-export function getLayer(property) {
+export function getLayer(property: typeof Property) {
 	var depth = property.propertyDepth
 	return property.propertyGroup(depth)
 }

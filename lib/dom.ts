@@ -2,7 +2,7 @@ import { assertIsNotNull } from './assert.ts'
 import { forEachLayer } from './forEach.ts'
 import { forEach, setDefault } from './main.ts'
 import { version } from './modules/app.ts'
-import { getFolder } from './modules/file.ts'
+import { getFolder } from './modules/project.ts'
 import { arrayEx } from './objects/array.ts'
 import { aeqKey } from './objects/key.ts'
 import {
@@ -19,6 +19,7 @@ const {
 	FolderItem,
 	Layer,
 	Item,
+	Collection,
 	MarkerPropertyGroup,
 	Property,
 	PropertyGroup,
@@ -28,18 +29,16 @@ const {
 /**
  * Gets all the item in a folder or project.
  * @method
- * @param  {FolderItem} [folder=app.project] The Folder to get items from.
- * @param  {boolean} [deep=true]             When `true`, gets items from
- *                                           subfolders as well.
- * @return {arrayEx}                     Array of Item objects
+ * @param folder The Folder to get items from.
+ * @param deep When `true`, gets items from subfolders as well.
+ * @return {arrayEx} Array of Item objects
  */
-export function getItems(folder, deep) {
+export function getItems(folder?: typeof FolderItem, deep = true) {
 	// If no arguments are given, just return all items in project.
 	if (folder === undefined) {
 		return normalizeCollection(app.project.items)
 	}
 
-	deep = setDefault(deep, true)
 	folder = getFolder(folder)
 	if (folder === null) {
 		return arrayEx()
@@ -56,13 +55,11 @@ export function getItems(folder, deep) {
  * Returns an {@link arrayEx} with all items in a folder, and items in
  * subfolders.
  * @method
- * @param  {FolderItem} folder     The folder to flatten.
- * @param  {Boolean} returnArrayEx Included so we can skip the converting to
- *                                 arrayEx when recursing. It is not meant to
- *                                 be used outside of this function.
- * @return {arrayEx}           ArrayEx with Item objects.
+ * @param folder The folder to flatten.
+ * @param returnArrayEx Included so we can skip the converting to arrayEx when recursing. It is not meant to be used outside of this function.
+ * @return ArrayEx with Item objects.
  */
-export function getItemsDeep(folder, returnArrayEx) {
+export function getItemsDeep(folder: typeof FolderItem, returnArrayEx = true) {
 	var item,
 		items = [],
 		len = folder.items.length
@@ -86,11 +83,11 @@ export function getItemsDeep(folder, returnArrayEx) {
 /**
  * Gets the all layers where the given Item object is used as a source.
  * @method
- * @param  {Item} item    The item to find in comps
+ * @param item The item to find in comps
  * @return {arrayEx}  Array of Layer objects
  */
-export function getItemInComps(item) {
-	var layers = []
+export function getItemInComps(item: typeof Item) {
+	var layers: (typeof Layer)[] = []
 	forEach(item.usedIn, function (comp) {
 		forEachLayer(comp, function (layer) {
 			if (layer.source === item) {
@@ -104,11 +101,11 @@ export function getItemInComps(item) {
 /**
  * Gets all the CompItems in the project. Or all CompItems in the given folder.
  * @method
- * @param {FolderItem} [folder=app.project] The folder to get comps from.
- * @param {boolean} [deep=true]             Go through subfolders looking for comps.
+ * @param folder The folder to get comps from.
+ * @param deep Go through subfolders looking for comps.
  * @return {arrayEx} Array of CompItems
  */
-export function getCompositions(folder, deep) {
+export function getCompositions(folder?: typeof FolderItem, deep = true) {
 	var items = getItems(folder, deep)
 	return items.filter(isComp)
 }
@@ -135,11 +132,10 @@ export { getActiveComposition as activeComposition }
 /**
  * Gets the CompItem with the matching name, or `null` if none is found.
  * @method
- * @param  {string} name      The name of the comp to found
- * @return {CompItem|null}    The comp with the matching name, or null if
- *                            none is found
+ * @param name The name of the comp to found
+ * @return {CompItem|null} The comp with the matching name, or null if none is found
  */
-export function getComposition(name) {
+export function getComposition(name: string) {
 	var length = app.project.items.length
 
 	for (var i = 1; i <= length; i++) {
@@ -159,13 +155,13 @@ export { getComposition as getComp }
  * `comp.layers` in that this returns an actual array. Instead of a colletion
  * with a start index of 1.
  * @method
- * @param  {CompItem[]|CompItem} comps CompItem(s) to get layers from.
- * @return {arrayEx}         Layer objects in the comp(s)
+ * @param comps CompItem(s) to get layers from.
+ * @return {arrayEx} Layer objects in the comp(s)
  */
-export function getLayers(comps) {
+export function getLayers(comps: typeof CompItem | (typeof CompItem)[]) {
 	assertIsNotNull(comps, 'comps is null')
 
-	var arr = []
+	var arr: typeof CompItem | (typeof CompItem)[] = []
 
 	if (isComp(comps)) {
 		comps = [comps]
@@ -183,10 +179,10 @@ export function getLayers(comps) {
  * Gets selected layers from a given comp or from the active comp if no comp is given.
  * If there is no active comp, an empty array is returned.
  * @method
- * @param  {CompItem} [comp] The comp to get selected layers from.
- * @return {arrayEx}     Array of Layer objects.
+ * @param comp The comp to get selected layers from.
+ * @return {arrayEx} Array of Layer objects.
  */
-export function getSelectedLayers(comp) {
+export function getSelectedLayers(comp?: typeof CompItem) {
 	if (!isComp(comp)) {
 		comp = getActiveComposition()
 	}
@@ -201,10 +197,10 @@ export function getSelectedLayers(comp) {
  * or from the active comp if no comp is given. If there is no active comp,
  * an empty array is returned.
  * @method
- * @param  {CompItem} [comp] Comp to get layers from
- * @return {arrayEx}     Array of Layer objects
+ * @param comp Comp to get layers from
+ * @return {arrayEx} Array of Layer objects
  */
-export function getSelectedLayersOrAll(comp) {
+export function getSelectedLayersOrAll(comp?: typeof CompItem) {
 	if (!isComp(comp)) {
 		comp = getActiveComposition()
 		if (comp === null) {
@@ -227,11 +223,10 @@ export { getSelectedLayersOrAll as getSelectedOrAllLayers }
  * if no argument is given. If there is no active comp, an empty array is
  * returned.
  * @method
- * @param  {CompItem|Layer} [obj] The object to get selected properties from.
- *         Defaults to the active comp.
- * @return {arrayEx}          Array of Property objects
+ * @param obj The object to get selected properties from. Defaults to the active comp.
+ * @return {arrayEx} Array of Property objects
  */
-export function getSelectedProperties(obj) {
+export function getSelectedProperties(obj?: typeof CompItem | typeof Layer) {
 	if (!obj) {
 		obj = getActiveComposition()
 	}
@@ -245,7 +240,7 @@ export { getSelectedProperties as getSelectedProps }
 /**
  * Gets all Property objects of all Layer objects in an array.
  * @method
- * @param  {Layer[]} layers   Layer Objects to get properties from.
+ * @param layers Layer Objects to get properties from.
  * @param  {Object} [options] Options for the function.
  * @param  {boolean} [options.separate=true] set to true to separate properties
  * (e.g separates Position into xPosition and yPosition).
@@ -253,10 +248,8 @@ export { getSelectedProperties as getSelectedProps }
  * @param  {boolean} [options.props=true] set to true to include properties.
  * @return {arrayEx} Array of Property objects
  */
-export function getProperties(layers, options) {
-	assertIsNotNull(layers, 'layer is null')
-
-	options = setDefault(options, { separate: true })
+export function getProperties(layers: (typeof Layer)[], options) {
+	assertIsNotNull(layers, 'argument layers is null')
 
 	var arr = []
 
@@ -272,7 +265,7 @@ export function getProperties(layers, options) {
  * Gets all children of the given layer or propertyGroup. This is a recursive
  * function, so it also gets grandchildren an so on.
  * @method
- * @param  {Layer|PropertyGroup} propertyParent Object to get properties from
+ * @param propertyParent Object to get properties from
  * @param  {Object} [options] Options for the function.
  * @param  {boolean} [options.separate=true] set to true to separate properties
  * (e.g separates Position into xPosition and yPosition).
@@ -280,7 +273,10 @@ export function getProperties(layers, options) {
  * @param  {boolean} [options.props=true] set to true to include properties.
  * @return {Array}            Array of Property objects
  */
-export function getPropertyChildren(propertyParent, options) {
+export function getPropertyChildren(
+	propertyParent: typeof Layer | typeof PropertyGroup,
+	options,
+) {
 	var arr = []
 	var property
 	var len = propertyParent.numProperties
@@ -320,10 +316,10 @@ export function getPropertyChildren(propertyParent, options) {
 /**
  * Gets the propertyGroups inside the effects group from all layers given.
  * @method
- * @param  {Layer[]|Layer} layers The Layer(s) to get effects from.
- * @return {arrayEx}     Array of PropertyGroup objects
+ * @param layers The Layer(s) to get effects from.
+ * @return {arrayEx} Array of PropertyGroup objects
  */
-export function getEffects(layers) {
+export function getEffects(layers: typeof Layer | (typeof Layer)[]) {
 	assertIsNotNull(layers, 'layers is null')
 
 	if (isLayer(layers)) {
@@ -356,10 +352,10 @@ export function getEffects(layers) {
  * 14.0 and later. If a comp is used in a earlier version. This function will
  * return `null`
  * @method
- * @param  {Layer|CompItem} [obj]     The object to get the marker group from.
+ * @param obj The object to get the marker group from.
  * @return {MarkerPropertyGroup|null} Object marker group, or null if n/a
  */
-export function getMarkerGroup(obj) {
+export function getMarkerGroup(obj?: typeof Layer | typeof CompItem) {
 	if (!obj) {
 		obj = getActiveComposition()
 	}
@@ -379,11 +375,10 @@ export function getMarkerGroup(obj) {
  * Gets all keys on the given property or array of properties. Returns an
  * aeqKeys object which can be used to see all attributes of the key.
  * @method
- * @param  {Property|Property[]} property The Property or Properties to get
- *                               keys from.
- * @return {arrayEx}         Array of aeqKey objects.
+ * @param property The Property or Properties to get keys from.
+ * @return {arrayEx} Array of aeqKey objects.
  */
-export function getKeys(property) {
+export function getKeys(property: typeof Property | (typeof Property)[]) {
 	var arr = [],
 		i,
 		len
@@ -402,6 +397,7 @@ export function getKeys(property) {
 	return arrayEx(arr)
 }
 
+// TODO: Document function and add types
 export function getChildren(obj) {
 	var ret
 	if (isComp(obj)) {
@@ -424,10 +420,10 @@ export function getChildren(obj) {
  * usually not ideal when programming. This function takes a Collection object
  * and converts it to a normal array.
  * @method
- * @param  {Collection} collection The Collection to convert
- * @return {arrayEx}           Normalized collection
+ * @param collection The Collection to convert
+ * @return {arrayEx} Normalized collection
  */
-export function normalizeCollection(collection) {
+export function normalizeCollection(collection: typeof Collection) {
 	// Because collection objects have a range [1...length], which is not ideal.
 	// This returns an array with all objects in the collection.
 	var ret = Array.prototype.slice.call(collection, 1)
@@ -444,22 +440,22 @@ export function normalizeCollection(collection) {
 /**
  * Converts frame count to time.
  * @method
- * @param  {number} frames    Frame count to convert
- * @param  {number} frameRate FPS to convert with
- * @return {number}           Frame count in time
+ * @param frames Frame count to convert
+ * @param frameRate FPS to convert with
+ * @return Frame count in time
  */
-export function framesToTime(frames, frameRate) {
+export function framesToTime(frames: number, frameRate: number) {
 	return frames / frameRate
 }
 
 /**
  * Converts time to frame count.
  * @method
- * @param  {number} time      Time to convert
- * @param  {number} frameRate FPS to convert with
- * @return {number}           Time in frames
+ * @param time Time to convert
+ * @param frameRate FPS to convert with
+ * @return Time in frames
  */
-export function timeToFrames(time, frameRate) {
+export function timeToFrames(time: number, frameRate: number) {
 	return time * frameRate
 }
 

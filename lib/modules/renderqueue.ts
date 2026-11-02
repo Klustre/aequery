@@ -9,15 +9,16 @@ const {
 	RenderQueueItem,
 	RQItemStatus,
 	OutputModule,
+	GetSettingsFormat,
 } = require('aftereffects')
 
 /**
  * Add a project item to the render queue.
  * @method
- * @param  {Item|CompItem} item The item to add to the queue.
- * @return {RenderQueueItem}      The added RenderQueueItem.
+ * @param item The item to add to the queue.
+ * @return {RenderQueueItem} The added RenderQueueItem.
  */
-export function queue(item) {
+export function queue(item: typeof Item | typeof CompItem) {
 	return app.project.renderQueue.items.add(item)
 }
 
@@ -56,10 +57,10 @@ export { clear as clearQueue }
 /**
  * Check if an item in the render queue is queued for rendering.
  * @method
- * @param  {RenderQueueItem} rqItem The item to check.
- * @return {boolean}        `true` if the item is going to be rendered.
+ * @param rqItem The item to check.
+ * @return `true` if the item is going to be rendered.
  */
-export function isQueued(rqItem) {
+export function isQueued(rqItem: typeof RenderQueueItem) {
 	return rqItem.status === RQItemStatus.QUEUED
 }
 
@@ -83,8 +84,8 @@ export function getQueuedItems() {
  */
 export function getQueuedComps() {
 	var queuedItems = getQueuedItems()
-	var compIDs = {}
-	var comps = []
+	var compIDs: Record<number, boolean> = {}
+	var comps: (typeof CompItem)[] = []
 
 	queuedItems.forEach(function (item) {
 		var comp = item.comp
@@ -116,8 +117,8 @@ export { getRQItems as getRenderQueueItems }
  */
 export function getRQComps() {
 	var rqItems = getRQItems()
-	var compIDs = {}
-	var comps = []
+	var compIDs: Record<number, boolean> = {}
+	var comps: (typeof CompItem)[] = []
 
 	rqItems.forEach(function (item) {
 		var comp = item.comp
@@ -140,11 +141,12 @@ export { getRQComps as getRenderQueueComps }
  * @see [RenderQueueItem.getSettings]{@link
  * http://docs.aenhancers.com/renderqueueitem/#renderqueueitem-getsettings}
  * @method
- * @param  {RenderQueueItem|OutputModule} renderItem The object to get settings
- * from.
- * @return {Object}        Object with render settings as strings.
+ * @param renderItem The object to get settings from.
+ * @return {Object} Object with render settings as strings.
  */
-export function getSettings(renderItem) {
+export function getSettings(
+	renderItem: typeof RenderQueueItem | typeof OutputModule,
+) {
 	return renderItem.getSettings(GetSettingsFormat.STRING)
 }
 export { getSettings as getRenderSettings }
@@ -153,10 +155,9 @@ export { getSettings as getRenderSettings }
  * Checks if the folder where the output module is rendering to exists, if
  * it does not exist, it gets created.
  * @method
- * @param  {OutputModule} outputModule The output module to check the render
- *                                     path of.
+ * @param outputModule The output module to check the render path of.
  */
-export function ensureRenderPathExists(outputModule) {
+export function ensureRenderPathExists(outputModule: typeof OutputModule) {
 	throw new Error('TODO: Migrate to UXP')
 	// ensureSecurityPrefEnabled()
 	// ensureFolderExists(outputModule.file.parent)
@@ -165,10 +166,10 @@ export function ensureRenderPathExists(outputModule) {
 /**
  * Checks if the given output module template exists.
  * @method
- * @param  {string} templateName Name of the template to check if exists.
- * @return {boolean}             `true` if the output module template exists.
+ * @param templateName Name of the template to check if exists.
+ * @return `true` if the output module template exists.
  */
-export function omTemplateExists(templateName) {
+export function omTemplateExists(templateName: string) {
 	var tempComp = create()
 	var tempRQItem = queue(tempComp)
 	var templates = arrayEx(tempRQItem.outputModule(1).templates)
@@ -186,10 +187,10 @@ export { omTemplateExists as outputModuleTemplateExists }
 /**
  * Checks if the given render queue template exists.
  * @method
- * @param  {string} templateName Name of the template to check.
- * @return {boolean}             `true` if the template exists.
+ * @param templateName Name of the template to check.
+ * @return `true` if the template exists.
  */
-export function rqTemplateExists(templateName) {
+export function rqTemplateExists(templateName: string) {
 	var tempComp = create()
 	var tempRQItem = queue(tempComp)
 	var templates = arrayEx(tempRQItem.templates)
