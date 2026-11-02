@@ -1,11 +1,6 @@
 import { getComp } from '../dom.ts'
 import { extend, forEach } from '../main.ts'
-import {
-	allChildren,
-	children,
-	parents,
-	relatedLayers,
-} from '../modules/layer.ts'
+import { allChildren, children, parents, relatedLayers } from '../layer.ts'
 import { isComp, isLayer, isNumber, isString } from '../types.ts'
 import { aeqComp } from './comp.ts'
 

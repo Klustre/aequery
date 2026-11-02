@@ -1,5 +1,5 @@
-import { normalizeCollection } from '../dom.ts'
-import { arrayEx } from '../objects/array.ts'
+import { normalizeCollection } from './dom.ts'
+import { arrayEx } from './objects/array.ts'
 import { create } from './comp.ts'
 
 const {

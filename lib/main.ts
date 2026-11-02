@@ -1,4 +1,4 @@
-import * as aeqApp from './modules/app.ts'
+import * as aeqApp from './app.ts'
 import { arrayEx } from './objects/array.ts'
 import { aeqComp } from './objects/comp.ts'
 import { aeqLayer } from './objects/layer.ts'

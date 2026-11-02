@@ -1,6 +1,6 @@
-import { getCompositions, getItems } from '../dom.ts'
-import { filter, forEach, setDefault } from '../main.ts'
-import { arrayEx } from '../objects/array.ts'
+import { getCompositions, getItems } from './dom.ts'
+import { filter, forEach, setDefault } from './main.ts'
+import { arrayEx } from './objects/array.ts'
 import {
 	isArray,
 	isComp,
@@ -9,7 +9,7 @@ import {
 	isFootageItem,
 	isNullOrUndefined,
 	isString,
-} from '../types.ts'
+} from './types.ts'
 import { getAEP } from './app.ts'
 import { getQueuedComps } from './renderqueue.ts'
 

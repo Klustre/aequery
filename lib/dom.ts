@@ -1,8 +1,8 @@
 import { assertIsNotNull } from './assert.ts'
 import { forEachLayer } from './forEach.ts'
 import { forEach, setDefault } from './main.ts'
-import { version } from './modules/app.ts'
-import { getFolder } from './modules/project.ts'
+import { version } from './app.ts'
+import { getFolder } from './project.ts'
 import { arrayEx } from './objects/array.ts'
 import { aeqKey } from './objects/key.ts'
 import {
