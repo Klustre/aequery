@@ -37,7 +37,7 @@ const { app, CompItem, RenderQueueItem, FolderItem } = require('aftereffects')
  * <caption>Create a comp with all default values</caption>
  * const comp = create()
  */
-export function create(folder, options) {
+export function create(folder?, options?) {
 	if (!isFolderItem(folder)) {
 		options = setDefault(folder, {})
 		folder = setDefault(options.folder, app.project)
@@ -71,7 +71,7 @@ export { create as createComp }
  * @method
  * @param comp The comp to find in the Render Queue.
  * @param queuedOnly Only get `RenderQueueItem`s that are queued.
- * @return {RenderQueueItem[]} The `RenderQueueItem`s that references the comp
+ * @return The `RenderQueueItem`s that references the comp
  *
  * @example
  * <caption>Get all `RenderQueueItem`s that references the comp.</caption>

@@ -92,7 +92,7 @@ export type SelectorString = string
  * @method
  * @param selector A string containing a selector expression
  * @param context The object to start looking from
- * @return {arrayEx} The found After Effects objects
+ * @return The found After Effects objects
  */
 // TODO: Fix complexity of this function
 export function select(

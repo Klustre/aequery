@@ -11,7 +11,6 @@ import {
 	isLayer,
 	isPropertyGroup,
 } from './types.ts'
-import { setDefault } from './utils.ts'
 
 const {
 	app,
@@ -31,15 +30,16 @@ const {
  * @method
  * @param folder The Folder to get items from.
  * @param deep When `true`, gets items from subfolders as well.
- * @return {arrayEx} Array of Item objects
+ * @return Array of Item objects
  */
-export function getItems(folder?: typeof FolderItem, deep = true) {
+export function getItems(folder?: typeof FolderItem | string, deep = true) {
 	// If no arguments are given, just return all items in project.
 	if (folder === undefined) {
 		return normalizeCollection(app.project.items)
 	}
 
 	folder = getFolder(folder)
+
 	if (folder === null) {
 		return arrayEx()
 	}
@@ -83,7 +83,7 @@ export function getItemsDeep(folder: typeof FolderItem, returnArrayEx = true) {
  * Gets the all layers where the given Item object is used as a source.
  * @method
  * @param item The item to find in comps
- * @return {arrayEx}  Array of Layer objects
+ * @return Array of Layer objects
  */
 export function getItemInComps(item: typeof Item) {
 	let layers: (typeof Layer)[] = []
@@ -102,7 +102,7 @@ export function getItemInComps(item: typeof Item) {
  * @method
  * @param folder The folder to get comps from.
  * @param deep Go through subfolders looking for comps.
- * @return {arrayEx} Array of CompItems
+ * @return Array of CompItems
  */
 export function getCompositions(folder?: typeof FolderItem, deep = true) {
 	const items = getItems(folder, deep)
@@ -115,7 +115,7 @@ export { getCompositions as getComps }
  * This gets `app.project.activeItem` and verifies that it is a comp. If it
  * not, it returns null.
  * @method
- * @return {CompItem|null} The active comp, or null if there is none.
+ * @return The active comp, or null if there is none.
  */
 export function getActiveComposition() {
 	const activeItem = app.project.activeItem
@@ -132,7 +132,7 @@ export { getActiveComposition as activeComposition }
  * Gets the CompItem with the matching name, or `null` if none is found.
  * @method
  * @param name The name of the comp to found
- * @return {CompItem|null} The comp with the matching name, or null if none is found
+ * @return The comp with the matching name, or null if none is found
  */
 export function getComposition(name: string) {
 	const length = app.project.items.length
@@ -153,16 +153,16 @@ export { getComposition as getComp }
  * with a start index of 1.
  * @method
  * @param comps CompItem(s) to get layers from.
- * @return {arrayEx} Layer objects in the comp(s)
+ * @return Layer objects in the comp(s)
  */
 export function getLayers(comps: typeof CompItem | (typeof CompItem)[]) {
 	assertIsNotNull(comps, 'comps is null')
 
-	let arr: typeof CompItem | (typeof CompItem)[] = []
-
 	if (isComp(comps)) {
 		comps = [comps]
 	}
+
+	let arr: (typeof CompItem)[] = []
 
 	for (let i = 0; i < comps.length; i++) {
 		const comp = comps[i]
@@ -177,7 +177,7 @@ export function getLayers(comps: typeof CompItem | (typeof CompItem)[]) {
  * If there is no active comp, an empty array is returned.
  * @method
  * @param comp The comp to get selected layers from.
- * @return {arrayEx} Array of Layer objects.
+ * @return Array of Layer objects.
  */
 export function getSelectedLayers(comp?: typeof CompItem) {
 	if (!isComp(comp)) {
@@ -195,7 +195,7 @@ export function getSelectedLayers(comp?: typeof CompItem) {
  * an empty array is returned.
  * @method
  * @param comp Comp to get layers from
- * @return {arrayEx} Array of Layer objects
+ * @return Array of Layer objects
  */
 export function getSelectedLayersOrAll(comp?: typeof CompItem) {
 	if (!isComp(comp)) {
@@ -221,7 +221,7 @@ export { getSelectedLayersOrAll as getSelectedOrAllLayers }
  * returned.
  * @method
  * @param obj The object to get selected properties from. Defaults to the active comp.
- * @return {arrayEx} Array of Property objects
+ * @return Array of Property objects
  */
 export function getSelectedProperties(obj?: typeof CompItem | typeof Layer) {
 	if (!obj) {
@@ -234,21 +234,35 @@ export function getSelectedProperties(obj?: typeof CompItem | typeof Layer) {
 }
 export { getSelectedProperties as getSelectedProps }
 
+export type PropertyOptions = {
+	separate: boolean
+	groups: boolean
+	props: boolean
+}
+
+const defaultProperyOptions: PropertyOptions = {
+	separate: true,
+	groups: false,
+	props: true,
+}
+
 /**
  * Gets all Property objects of all Layer objects in an array.
  * @method
  * @param layers Layer Objects to get properties from.
- * @param  {Object} [options] Options for the function.
- * @param  {boolean} [options.separate=true] set to true to separate properties
- * (e.g separates Position into xPosition and yPosition).
- * @param  {boolean} [options.groups=false] set to true to include property groups.
- * @param  {boolean} [options.props=true] set to true to include properties.
- * @return {arrayEx} Array of Property objects
+ * @param options Options for the function.
+ * @param options.separate set to true to separate properties (e.g separates Position into xPosition and yPosition).
+ * @param options.groups set to true to include property groups.
+ * @param options.props set to true to include properties.
+ * @return Array of Property objects
  */
-export function getProperties(layers: (typeof Layer)[], options) {
+export function getProperties(
+	layers: (typeof Layer)[],
+	options = defaultProperyOptions,
+) {
 	assertIsNotNull(layers, 'argument layers is null')
 
-	let arr = []
+	let arr: (typeof Property)[] = []
 
 	for (let l = 0; l < layers.length; l++) {
 		const layer = layers[l]
@@ -263,20 +277,18 @@ export function getProperties(layers: (typeof Layer)[], options) {
  * function, so it also gets grandchildren an so on.
  * @method
  * @param propertyParent Object to get properties from
- * @param  {Object} [options] Options for the function.
- * @param  {boolean} [options.separate=true] set to true to separate properties
- * (e.g separates Position into xPosition and yPosition).
- * @param  {boolean} [options.groups=false] set to true to include property groups.
- * @param  {boolean} [options.props=true] set to true to include properties.
- * @return {Array}            Array of Property objects
+ * @param options Options for the function.
+ * @param options.separate set to true to separate properties (e.g separates Position into xPosition and yPosition).
+ * @param options.groups set to true to include property groups.
+ * @param options.props set to true to include properties.
+ * @return Array of Property objects
  */
 export function getPropertyChildren(
 	propertyParent: typeof Layer | typeof PropertyGroup,
-	options,
+	options = defaultProperyOptions,
 ) {
-	options = setDefault(options, { separate: false })
 	const len = propertyParent.numProperties
-	let arr = []
+	let arr: (typeof Property)[] = []
 
 	for (let i = 1; i <= len; i++) {
 		let property = propertyParent.property(i)
@@ -313,7 +325,7 @@ export function getPropertyChildren(
  * Gets the propertyGroups inside the effects group from all layers given.
  * @method
  * @param layers The Layer(s) to get effects from.
- * @return {arrayEx} Array of PropertyGroup objects
+ * @return Array of PropertyGroup objects
  */
 export function getEffects(layers: typeof Layer | (typeof Layer)[]) {
 	assertIsNotNull(layers, 'layers is null')
@@ -322,17 +334,16 @@ export function getEffects(layers: typeof Layer | (typeof Layer)[]) {
 		layers = [layers]
 	}
 
-	const len = layers.length
-	let effectslen
 	let arr = []
 
+	const len = layers.length
 	for (let l = 0; l < len; l++) {
 		const effects = layers[l].property('ADBE Effect Parade')
 		if (effects === null) {
 			continue
 		}
 
-		effectslen = effects.numProperties
+		const effectslen = effects.numProperties
 		for (let e = 1; e <= effectslen; e++) {
 			arr.push(effects.property(e))
 		}
@@ -349,7 +360,7 @@ export function getEffects(layers: typeof Layer | (typeof Layer)[]) {
  * return `null`
  * @method
  * @param obj The object to get the marker group from.
- * @return {MarkerPropertyGroup|null} Object marker group, or null if n/a
+ * @return Object marker group, or null if n/a
  */
 export function getMarkerGroup(obj?: typeof Layer | typeof CompItem) {
 	if (!obj) {
@@ -357,7 +368,7 @@ export function getMarkerGroup(obj?: typeof Layer | typeof CompItem) {
 	}
 
 	if (isLayer(obj)) {
-		return obj.property('ADBE Marker')
+		return obj.property('ADBE Marker') as typeof MarkerPropertyGroup
 	}
 
 	if (isComp(obj) && version >= 14.0) {
@@ -372,10 +383,10 @@ export function getMarkerGroup(obj?: typeof Layer | typeof CompItem) {
  * aeqKeys object which can be used to see all attributes of the key.
  * @method
  * @param property The Property or Properties to get keys from.
- * @return {arrayEx} Array of aeqKey objects.
+ * @return Array of aeqKey objects.
  */
 export function getKeys(property: typeof Property | (typeof Property)[]) {
-	let arr = []
+	let arr: (typeof aeqKey)[] = []
 
 	if (isArray(property)) {
 		for (let i = 0, len = property.length; i < len; i++) {
@@ -391,8 +402,14 @@ export function getKeys(property: typeof Property | (typeof Property)[]) {
 	return arrayEx(arr)
 }
 
-// TODO: Document function and add types
-export function getChildren(obj) {
+// TODO: Document function
+export function getChildren(
+	obj:
+		| typeof CompItem
+		| typeof Layer
+		| typeof PropertyGroup
+		| (typeof CompItem | typeof Layer | typeof PropertyGroup)[],
+) {
 	if (isComp(obj)) {
 		return normalizeCollection(obj.layers)
 	}
@@ -414,7 +431,7 @@ export function getChildren(obj) {
  * and converts it to a normal array.
  * @method
  * @param collection The Collection to convert
- * @return {arrayEx} Normalized collection
+ * @return Normalized collection
  */
 export function normalizeCollection(collection: typeof Collection) {
 	// Because collection objects have a range [1...length], which is not ideal.
@@ -453,7 +470,10 @@ export function timeToFrames(time: number, frameRate: number) {
 	return time * frameRate
 }
 
-function normalizeProperty(propertyParent, property) {
+function normalizeProperty(
+	propertyParent: typeof PropertyGroup,
+	property: typeof Property,
+) {
 	switch (property.name) {
 		case 'X Position':
 		case 'Y Position':

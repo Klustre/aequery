@@ -34,7 +34,7 @@ export function copyLayerToggles(
  * Gets all layers that has the given layer as its parent.
  * @method
  * @param parentLayer The layer to get children from.
- * @return {arrayEx} The children Layers of the given Layer.
+ * @return The children Layers of the given Layer.
  */
 export function children(parentLayer: typeof Layer) {
 	const layers = getLayers(parentLayer.containingComp)
@@ -49,7 +49,7 @@ export { children as getLayerChildren }
  * that has those layers, and so on.
  * @method
  * @param parentLayer The layer to get decendants from.
- * @return {arrayEx} Children and decendants of the given Layer.
+ * @return Children and decendants of the given Layer.
  */
 export function allChildren(parentLayer: typeof Layer) {
 	let layers: (typeof Layer)[] = []
@@ -66,7 +66,7 @@ export { children as getLayerChildrenRecursive }
  * Gets the layers parent chain. I.e This layer's parent's parent, and so on.
  * @method
  * @param childLayer The layer to get parents from.
- * @return {arrayEx} The Parents of the given layer.
+ * @return The Parents of the given layer.
  */
 export function parents(childLayer: typeof Layer) {
 	const parents = arrayEx()
@@ -84,7 +84,7 @@ export { parents as getLayerParentsRecursive }
  * [all children]{@link allChildren} of the given layers.
  * @method
  * @param root The Layer to get the parents and children from
- * @return {arrayEx} The layer's parents and children.
+ * @return The layer's parents and children.
  */
 export function relatedLayers(root: typeof Layer) {
 	let pars = parents(root)

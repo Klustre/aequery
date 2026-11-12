@@ -1,14 +1,14 @@
 import { extend } from '../utils.ts'
 
-const { CompItem } = require('aftereffects')
+const { CompItem, Layer } = require('aftereffects')
 
 /**
  * Converts a CompItem into an aeqComp object
  * @class
- * @param  {CompItem} comp CompItem to turn into aeqComp object
- * @return {aeqComp} aeqComp object of CompItem
+ * @param comp CompItem to turn into aeqComp object
+ * @return aeqComp object of CompItem
  */
-export function aeqComp(comp) {
+export function aeqComp(comp: typeof CompItem | typeof aeqComp) {
 	if (comp instanceof aeqComp) {
 		return comp
 	}
@@ -33,7 +33,7 @@ aeqComp.prototype = {
 	 * Get the original object
 	 * @method
 	 * @instance
-	 * @return {CompItem} Native Comp object
+	 * @return Native Comp object
 	 */
 	get: function () {
 		return this.comp
@@ -45,7 +45,13 @@ aeqComp.prototype = {
 	 * @instance
 	 * @param  {Function} callback Function to run on each layer in aeqComp object
 	 */
-	forEachLayer: function (callback) {
+	forEachLayer: function (
+		callback: (
+			layer: typeof Layer,
+			index: number,
+			layers: (typeof Layer)[],
+		) => void,
+	) {
 		const length = this.comp.numLayers
 		for (let i = 1; i <= length; i++) {
 			callback(this.comp.layer(i), i, this)

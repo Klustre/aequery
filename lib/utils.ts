@@ -5,9 +5,9 @@ import { isArray, isFunction, isPlainObject } from './types.ts'
  * is not undefined, else it returns `defaultVal`.
  *
  * @method
- * @param  {Any} value      The value to check
- * @param  {Any} defaultVal The value to use if `value` is `undefined`
- * @return {Any}            `value` if it is not `undefined`, else `defaultVal`
+ * @param value The value to check
+ * @param defaultVal The value to use if `value` is `undefined`
+ * @return `value` if it is not `undefined`, else `defaultVal`
  *
  * @example
  * function say( greeting ) {
@@ -15,7 +15,7 @@ import { isArray, isFunction, isPlainObject } from './types.ts'
  *     alert( a )
  * }
  */
-export function setDefault(value, defaultVal) {
+export function setDefault(value: any, defaultVal: any) {
 	return typeof value == 'undefined' ? defaultVal : value
 }
 
@@ -25,7 +25,7 @@ export function setDefault(value, defaultVal) {
  * If only one object is given, the `aeq` object is assumed to be the target.
  *
  * @method
- * @return {Object} The merged object
+ * @return The merged object
  * @see [jQuery.extend]{@link https://api.jquery.com/jquery.extend/} for more information, this function uses the same api.
  * @example
  * let objectA = {

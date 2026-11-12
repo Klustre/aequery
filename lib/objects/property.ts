@@ -9,10 +9,10 @@ const { Property } = require('aftereffects')
 /**
  * Converts a Property into an Property object
  * @class
- * @param  {Property} property Property to convert
- * @return {aeqProperty}      aeqProperty object
+ * @param property Property to convert
+ * @return aeqProperty object
  */
-export function aeqProperty(property) {
+export function aeqProperty(property: typeof Property | typeof aeqProperty) {
 	if (property instanceof aeqProperty) {
 		return property
 	}
@@ -37,7 +37,7 @@ aeqProperty.prototype = {
 	 * Get the original object
 	 * @method
 	 * @instance
-	 * @return {Property} Native Property object
+	 * @return Native Property object
 	 */
 	get: function () {
 		return this.property
@@ -47,11 +47,11 @@ aeqProperty.prototype = {
 	 * Gets or sets expression on property
 	 * @method
 	 * @instance
-	 * @param  {string} [newValue] Expression to set
-	 * @return {string|boolean}    Returns current expression, current expression
+	 * @param  newValue Expression to set
+	 * @return Returns current expression, current expression
 	 * error, or `true` if expression was set
 	 */
-	expression: function (newValue) {
+	expression: function (newValue: string) {
 		if (!this.property.canSetExpression) {
 			return false
 		}
@@ -72,10 +72,10 @@ aeqProperty.prototype = {
 	 * Gets array of selected keys
 	 * @method
 	 * @instance
-	 * @return {Key[]} ArrayEx of selected keys
+	 * @return ArrayEx of selected keys
 	 */
 	selectedKeys: function () {
-		let selectedKeys = []
+		let selectedKeys: (typeof aeqKey)[] = []
 		// Return key objects for selected keys
 		for (let i = 0; i < this.property.selectedKeys.length; i++) {
 			selectedKeys.push(this.key(this.property.selectedKeys[i]))
@@ -87,11 +87,11 @@ aeqProperty.prototype = {
 	 * Adds & returns a new key at time
 	 * @method
 	 * @instance
-	 * @param  {number} time The time in seconds; a floating-point value. The
+	 * @param time The time in seconds; a floating-point value. The
 	 * beginning of the composition is 0.
-	 * @return {Key}         Newly-created key
+	 * @return Newly-created key
 	 */
-	addKey: function (time) {
+	addKey: function (time: number) {
 		const keyIndex = this.property.addKey(time)
 		return this.key(keyIndex)
 	},
@@ -100,22 +100,22 @@ aeqProperty.prototype = {
 	 * Retrieves property following passed dimension
 	 * @method
 	 * @instance
-	 * @param  {number} dim The dimension number (starting at 0).
-	 * @return {Property}   Property following passed dimension
+	 * @param dimension The dimension number (starting at 0).
+	 * @return Property following passed dimension
 	 */
-	separationFollower: function (dim) {
-		return this.property.getSeparationFollower(dim)
+	separationFollower: function (dimension: number) {
+		return this.property.getSeparationFollower(dimension)
 	},
 
 	/**
 	 * Returns the index of the keyframe nearest to the specified time.
 	 * @method
 	 * @instance
-	 * @param  {number} time The time in seconds; a floating-point value. The
+	 * @param time The time in seconds; a floating-point value. The
 	 * beginning of the composition is 0.
-	 * @return {number}       Nearest key index
+	 * @return Nearest key index
 	 */
-	nearestKeyIndex: function (time) {
+	nearestKeyIndex: function (time: number) {
 		return this.property.nearestKeyIndex(time)
 	},
 
@@ -123,9 +123,9 @@ aeqProperty.prototype = {
 	 * Removes key by index or key object
 	 * @method
 	 * @instance
-	 * @param  {number|Key} keyIndex Index of target key, or key itself
+	 * @param keyIndex Index of target key, or key itself
 	 */
-	removeKey: function (keyIndex) {
+	removeKey: function (keyIndex: number | typeof aeqKey) {
 		if (isNumber(keyIndex)) {
 			this.property.removeKey(keyIndex)
 		} else if (keyIndex.toString() === '[object aeqKey]') {
@@ -139,7 +139,7 @@ aeqProperty.prototype = {
 	 * 	(e.g Y Position), otherwise AE throws an error
 	 * @method
 	 * @instance
-	 * @return {Property|null} Original multidimensional property, or null
+	 * @return Original multidimensional property, or null
 	 */
 	separationLeader: function () {
 		if (this.property.isSeparationFollower) {
@@ -154,7 +154,7 @@ aeqProperty.prototype = {
 	 * 	(e.g Y Position), otherwise AE throws an error
 	 * @method
 	 * @instance
-	 * @return {number|null} Dimension number, or null
+	 * @return Dimension number, or null
 	 */
 	separationDimension: function () {
 		if (this.property.isSeparationFollower) {
@@ -167,7 +167,7 @@ aeqProperty.prototype = {
 	 * Returns maximum permitted value of property
 	 * @method
 	 * @instance
-	 * @return {number|null} Max value, or null if there isn't one
+	 * @return Max value, or null if there isn't one
 	 */
 	maxValue: function () {
 		if (this.property.hasMax) {
@@ -180,7 +180,7 @@ aeqProperty.prototype = {
 	 * Returns minimum permitted value of property
 	 * @method
 	 * @instance
-	 * @return {number|null} Max value, or null if there isn't one
+	 * @return Min value, or null if there isn't one
 	 */
 	minValue: function () {
 		if (this.property.hasMin) {
@@ -196,10 +196,10 @@ aeqProperty.prototype = {
 	 * 	Otherwise, returns the static value.
 	 * @method
 	 * @instance
-	 * @param  {any} [newValue] New value to try to set
-	 * @return {any}            Current value
+	 * @param newValue New value to try to set
+	 * @return Current value
 	 */
-	value: function (newValue) {
+	value: function (newValue?: any) {
 		if (arguments.length === 0) {
 			return this.property.value
 		}
@@ -211,12 +211,12 @@ aeqProperty.prototype = {
 	 * time
 	 * @method
 	 * @instance
-	 * @param  {number} time    The time in seconds; a floating-point value. The
+	 * @param time The time in seconds; a floating-point value. The
 	 * beginning of the composition is 0.
-	 * @param  {any}    [value] Property value at time
-	 * @return {any|number}     Set value, or index of nearest key to `time`
+	 * @param value Property value at time
+	 * @return Set value, or index of nearest key to `time`
 	 */
-	valueAtTime: function (time, value) {
+	valueAtTime: function (time: number, value?: any) {
 		// TODO: Both setValueAtTime and valueAtTime require two arguments
 		// How should this be handled?
 		if (arguments.length === 1) {
@@ -232,11 +232,11 @@ aeqProperty.prototype = {
 	 * Get or sets values for a set of keyframes at specified times
 	 * @method
 	 * @instance
-	 * @param  {number[]} times    Array of times
-	 * @param  {any[]}    [values] Array of values
-	 * @return {any[]|number[]}    Array of set values, or array of indices of nearest key to `time`
+	 * @param times Array of times
+	 * @param values Array of values
+	 * @return Array of set values, or array of indices of nearest key to `time`
 	 */
-	valuesAtTimes: function (times, values) {
+	valuesAtTimes: function (times: number[], values?: any[]) {
 		const il = times.length
 		let result = []
 		let i = 0
@@ -262,9 +262,15 @@ aeqProperty.prototype = {
 	 * Runs a function on each key in current property
 	 * @method
 	 * @instance
-	 * @param  {Function} callback Function to execute on each key
+	 * @param callback Function to execute on each key
 	 */
-	forEachKey: function (callback) {
+	forEachKey: function (
+		callback: (
+			key: typeof aeqKey,
+			index: number,
+			prop: typeof Property,
+		) => void,
+	) {
 		const keys = this.getKeys()
 		const length = keys.length
 		for (let i = 0; i < length; i++) {
@@ -276,20 +282,20 @@ aeqProperty.prototype = {
 	 * Returns a aeqKey object for specific key index
 	 * @method
 	 * @instance
-	 * @param  {number} keyIndex Index of target key
-	 * @return {aeqKey}         aeqKey object for target key
+	 * @param keyIndex Index of target key
+	 * @return aeqKey object for target key
 	 */
-	key: function (keyIndex) {
+	key: function (keyIndex: number) {
 		return new aeqKey(this.property, keyIndex)
 	},
 
 	/**
 	 * Gets all keys of the property
 	 * @method
-	 * @return {aeqKey[]} ArrayEx of all keyframes on the property
+	 * @return ArrayEx of all keyframes on the property
 	 */
 	getKeys: function () {
-		let keys = []
+		let keys: (typeof aeqKey)[] = []
 		const length = this.property.numKeys
 		for (let i = 1; i <= length; i++) {
 			keys.push(this.key(i))
@@ -313,7 +319,7 @@ forEach(
 		'propertyValueType',
 		'unitsText',
 	],
-	function (attribute) {
+	function (attribute: string) {
 		aeqProperty.prototype[attribute] = function () {
 			return this.property[attribute]
 		}

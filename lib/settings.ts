@@ -9,7 +9,7 @@ const { app } = require('aftereffects')
  * @param sectionName Settings section name
  * @param keyName Settings key name
  * @param value Settings value to save for section:key
- * @return {string} setting value of section:key
+ * @return Setting value of section:key
  */
 export function setting(sectionName: string, keyName: string, value?: string) {
 	if (value !== undefined) {
@@ -25,7 +25,7 @@ export function setting(sectionName: string, keyName: string, value?: string) {
  * @param keyName Settings key name
  * @param value Settings value to save for section:key
  * @param overwrite `true` to overwite if present
- * @return {string} Setting value of section:key
+ * @return Setting value of section:key
  */
 export function initSetting(
 	sectionName: string,
@@ -44,7 +44,7 @@ export function initSetting(
  * @method
  * @param sectionName Settings section name
  * @param keyName Settings key name
- * @return {string|undefined} Value of saved setting, or undefined if blank
+ * @return Value of saved setting, or undefined if blank
  */
 export function get(sectionName: string, keyName: string) {
 	if (have(sectionName, keyName)) {
@@ -59,7 +59,7 @@ export { get as getSetting }
  * @method
  * @param sectionName Settings section name
  * @param keyName Settings key name
- * @return {boolean|undefined}  Saved setting as boolean
+ * @return Saved setting as boolean
  */
 export function getAsBool(sectionName: string, keyName: string) {
 	const value = get(sectionName, keyName)
@@ -77,7 +77,7 @@ export { getAsBool as getSettingAsBool }
  * @method
  * @param sectionName Settings section name
  * @param keyName Settings key name
- * @return {string[]|undefined} Saved setting as boolean
+ * @return Saved setting as boolean
  */
 export function getAsArray(sectionName: string, keyName: string) {
 	return get(sectionName, keyName).split(',')
@@ -89,7 +89,7 @@ export { getAsArray as getSettingAsArray }
  * @method
  * @param sectionName Settings section name
  * @param keyName Settings key name
- * @return {number|undefined} Saved setting as float
+ * @return Saved setting as float
  */
 export function getAsFloat(sectionName: string, keyName: string) {
 	return parseFloat(get(sectionName, keyName))
@@ -101,7 +101,7 @@ export { getAsFloat as getSettingAsFloat }
  * @method
  * @param sectionName Settings section name
  * @param keyName Settings key name
- * @return {number|undefined}   Saved setting as int
+ * @return Saved setting as int
  */
 export function getAsInt(sectionName: string, keyName: string) {
 	return parseInt(get(sectionName, keyName))
@@ -113,7 +113,7 @@ export { getAsInt as getSettingAsInt }
  * @method
  * @param sectionName Settings section name
  * @param keyName Settings key name
- * @return {boolean} Whether the setting exists
+ * @return Whether the setting exists
  */
 export function have(sectionName: string, keyName: string) {
 	return app.settings.haveSetting(sectionName, keyName)
@@ -141,7 +141,7 @@ export { save as set }
  * @method
  * @param sectionName Settings section name
  * @param keyNames Object of containing key names
- * @return {object} Object of fetched settings
+ * @return Object of fetched settings
  */
 export function unpack(
 	sectionName: string,

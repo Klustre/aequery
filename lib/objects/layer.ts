@@ -5,15 +5,15 @@ import { isComp, isLayer, isNumber, isString } from '../types.ts'
 import { extend } from '../utils.ts'
 import { aeqComp } from './comp.ts'
 
-const { Layer, CompItem } = require('aftereffects')
+const { Layer, CompItem, PropertyGroup } = require('aftereffects')
 
 /**
  * Converts a Layer into an aeqLayer object
  * @class
- * @param  {Layer} layer Layer to turn into aeqLayer object
- * @return {aeqLayer} Layer object of Layer
+ * @param layer Layer to turn into aeqLayer object
+ * @return Layer object of Layer
  */
-export function aeqLayer(layer) {
+export function aeqLayer(layer: typeof Layer | typeof aeqLayer) {
 	if (layer instanceof aeqLayer) {
 		return layer
 	}
@@ -40,7 +40,7 @@ aeqLayer.prototype = {
 	 * Get the original object
 	 * @method
 	 * @instance
-	 * @return {Layer} Native Layer object
+	 * @return Native Layer object
 	 */
 	get: function () {
 		return this.layer
@@ -57,7 +57,7 @@ aeqLayer.prototype = {
 	 * - an index for a layer in the comp
 	 * - a `string` with a layer name
 	 * - a `string` starting with `+=` or `-=` then a `number` to indicate an index relative to the current layer
-	 * @return {Layer|null} Parent layer, or null if none
+	 * @return Parent layer, or null if none
 	 */
 	parent: function (
 		selector?: typeof Layer | typeof aeqLayer | number | string,
@@ -85,10 +85,10 @@ aeqLayer.prototype = {
 	 * Copies current layer to comp
 	 * @method
 	 * @instance
-	 * @param  {CompItem|aeqComp} comp Comp to copy layer to
-	 * @return {aeqLayer}              Newly copied layer
+	 * @param comp Comp to copy layer to
+	 * @return Newly copied layer
 	 */
-	copyToComp: function (comp) {
+	copyToComp: function (comp: typeof CompItem | typeof aeqComp | string) {
 		if (!isComp(comp)) {
 			if (comp instanceof aeqComp) {
 				comp = comp.comp
@@ -104,7 +104,7 @@ aeqLayer.prototype = {
 	 * Removes this layer's parent
 	 * @method
 	 * @instance
-	 * @return {aeqLayer} This layer
+	 * @return This layer
 	 */
 	removeParent: function () {
 		this.layer.parent = null
@@ -115,10 +115,16 @@ aeqLayer.prototype = {
 	 * Executes a callback function on each effect on this layer
 	 * @method
 	 * @instance
-	 * @param  {Function} callback Function to run on each effect
-	 * @return {aeqLayer}         This layer
+	 * @param callback Function to run on each effect
+	 * @return This layer
 	 */
-	forEachEffect: function (callback) {
+	forEachEffect: function (
+		callback: (
+			effect: typeof PropertyGroup,
+			index: number,
+			effects: (typeof PropertyGroup)[],
+		) => void,
+	) {
 		const effects = this.layer.property('ADBE Effect Parade')
 		const length = effects.numProperties
 		for (let i = 1; i <= length; i++) {
@@ -131,9 +137,9 @@ aeqLayer.prototype = {
 	 * Adds effect to layer by name or matchname
 	 * @method
 	 * @instance
-	 * @param  {string} effectName Effect name or matchname to add to layer
+	 * @param effectName Effect name or matchname to add to layer
 	 */
-	addEffect: function (effectName) {
+	addEffect: function (effectName: string) {
 		const effects = this.layer.property('ADBE Effect Parade')
 		if (effects.canAddProperty(effectName)) {
 			effects.addProperty(effectName)
@@ -148,7 +154,7 @@ aeqLayer.prototype = {
 	 * Gets all layers that has the given layer as its parent.
 	 * @method
 	 * @instance
-	 * @return {Layer[]} Children of this layer
+	 * @return Children of this layer
 	 */
 	children: function () {
 		return children(this.layer)
@@ -159,7 +165,7 @@ aeqLayer.prototype = {
 	 * that has those layers, and so on.
 	 * @method
 	 * @instance
-	 * @return {Layer[]} Children and decendants of this layer
+	 * @return Children and decendants of this layer
 	 */
 	allChildren: function () {
 		return allChildren(this.layer)
@@ -169,7 +175,7 @@ aeqLayer.prototype = {
 	 * This layer's parent chain
 	 * @method
 	 * @instance
-	 * @return {Layer[]} Parents of this layer
+	 * @return Parents of this layer
 	 */
 	parents: function () {
 		return parents(this.layer)
@@ -180,7 +186,7 @@ aeqLayer.prototype = {
 	 * [all children]{@link allChildren} of the this layer.
 	 * @method
 	 * @instance
-	 * @return {Layer[]} The layer's parents and children.
+	 * @return The layer's parents and children.
 	 */
 	relatedLayers: function () {
 		return relatedLayers(this.layer)
@@ -199,7 +205,7 @@ forEach(
 		'containingComp',
 		'hasVideo',
 	],
-	function (attribute) {
+	function (attribute: string) {
 		aeqLayer.prototype[attribute] = function () {
 			return this.layer[attribute]
 		}
@@ -220,8 +226,8 @@ forEach(
 		'startTime',
 		'stretch',
 	],
-	function (attribute) {
-		aeqLayer.prototype[attribute] = function (newValue) {
+	function (attribute: string) {
+		aeqLayer.prototype[attribute] = function (newValue: any) {
 			if (arguments.length === 0) {
 				return this.layer[attribute]
 			}
@@ -243,8 +249,8 @@ forEach(
 		'moveToBeginning',
 		'moveToEnd',
 	],
-	function (method) {
-		aeqLayer.prototype[method] = function (newValue) {
+	function (method: string) {
+		aeqLayer.prototype[method] = function (newValue: any) {
 			this.layer[method](newValue)
 
 			// Return the aeqLayer object for chaining methods
@@ -255,16 +261,21 @@ forEach(
 
 // Create methods that can take a Layer, aeqLayer, number or string as input
 // and need to pass that to a method that takes a Layer object
-forEach(['setParentWithJump', 'moveAfter', 'moveBefore'], function (method) {
-	aeqLayer.prototype[method] = function (selector) {
-		const layer = getLayer(this.layer, selector)
-		if (layer === null) {
-			return null
+forEach(
+	['setParentWithJump', 'moveAfter', 'moveBefore'],
+	function (method: string) {
+		aeqLayer.prototype[method] = function (
+			selector: typeof Layer | typeof aeqLayer | number | string,
+		) {
+			const layer = getLayer(this.layer, selector)
+			if (layer === null) {
+				return null
+			}
+			this.layer[method](layer)
+			return layer
 		}
-		this.layer[method](layer)
-		return layer
-	}
-})
+	},
+)
 
 // Used in aeqLayer.parent, setParentWithJump and move methods
 const regexRelativeIndex = /^(\+|-)=/
@@ -323,9 +334,9 @@ function getLayer(
 	return null
 }
 
-function getRelativeIndex(str) {
-	let offset = str.charAt(0) + str.substr(2)
-	offset = parseInt(offset, 10)
+function getRelativeIndex(str: string) {
+	const value = str.charAt(0) + str.substr(2)
+	const offset = parseInt(value, 10)
 	if (isNaN(offset)) {
 		return false
 	}

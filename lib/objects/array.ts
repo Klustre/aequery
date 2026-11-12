@@ -29,10 +29,10 @@ let arrayExObj = {
 	 * Inserts an element into arrayEx at specified index
 	 * @method
 	 * @memberof arrayEx
-	 * @param  {any}    insert Element to insert
-	 * @param  {number} index  Index to insert element at
+	 * @param insert Element to insert
+	 * @param index  Index to insert element at
 	 */
-	insertAt: function (insert, index) {
+	insertAt: function (insert: any, index: number) {
 		this.splice(index, 0, insert)
 	},
 
@@ -41,14 +41,12 @@ let arrayExObj = {
 	 * value, it only returns the valure from the first object.
 	 * @method
 	 * @memberof arrayEx
-	 * @param {string} attributeName  The name of the attribute to get or set.
-	 * @param  {Any}    [newValue]    The value to set. If not given, will only get
-	 *                                the value of the first object.
-	 * @return {Any}                  when getting, the value of the attribute.
-	 *                                When setting, `undefined`.
+	 * @param attributeName The name of the attribute to get or set.
+	 * @param newValue The value to set. If not given, will only get the value of the first object.
+	 * @return when getting, the value of the attribute. When setting, `undefined`.
 	 * @see attr
 	 */
-	attr: function () {
+	attr: function (attributeName: string, newValue?: any) {
 		// Add this array object to the beginning of arguments
 		;[].unshift.call(arguments, this)
 		return attr.apply(this, arguments)
@@ -95,7 +93,7 @@ export function arrayEx(arr = []) {
  * @param array The array of objects to get or set attribute values of.
  * @param attributeName The name of the attribute to get or set.
  * @param newValue The value to set. If not given, will only get the value of the first object.
- * @return {Any|undefined} When getting, the value of the attribute. When setting, `undefined`.
+ * @return When getting, the value of the attribute. When setting, `undefined`.
  */
 export function attr(array: any[], attributeName: string, newValue: any) {
 	// Throw error if only array is given
@@ -125,17 +123,16 @@ function getAttr(object, attributeName: string) {
 	return object[attributeName]
 }
 
-let attrObj = {
-	setters: {
-		'[object Property]': {
-			value: 'setValue',
-		},
-	},
-}
-
 function setAttr(object, attributeName: string, newValue: any) {
+	const obj = {
+		setters: {
+			'[object Property]': {
+				value: 'setValue',
+			},
+		},
+	}
 	// Check if there is a special setter for this object and attributeName
-	const attrSetters = attrObj.setters[object.toString()]
+	const attrSetters = obj.setters[object.toString()]
 	if (attrSetters !== undefined) {
 		const setter = attrSetters[attributeName]
 		if (setter !== undefined) {

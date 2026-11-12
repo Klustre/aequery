@@ -16,7 +16,7 @@ const {
  * Add a project item to the render queue.
  * @method
  * @param item The item to add to the queue.
- * @return {RenderQueueItem} The added RenderQueueItem.
+ * @return The added RenderQueueItem.
  */
 export function queue(item: typeof Item | typeof CompItem) {
 	return app.project.renderQueue.items.add(item)
@@ -67,7 +67,7 @@ export function isQueued(rqItem: typeof RenderQueueItem) {
  * Gets all `RenderQueueItem`s in the render queue which are queued for
  * rendering.
  * @method
- * @return {arrayEx} ArrayEx of `RenderQueueItem`s
+ * @return ArrayEx of `RenderQueueItem`s
  */
 export function getQueuedItems() {
 	const items = getRQItems()
@@ -79,7 +79,7 @@ export function getQueuedItems() {
 /**
  * Gets all `CompItem`s that are queued for rendering.
  * @method
- * @return {arrayEx} ArrayEx of `CompItem`s
+ * @return ArrayEx of `CompItem`s
  */
 export function getQueuedComps() {
 	const queuedItems = getQueuedItems()
@@ -102,7 +102,7 @@ export function getQueuedComps() {
 /**
  * Gets all render queue items.
  * @method
- * @return {arrayEx} ArrayEx of `RenderQueueItem`s
+ * @return ArrayEx of `RenderQueueItem`s
  */
 export function getRQItems() {
 	return arrayEx(normalizeCollection(app.project.renderQueue.items))
@@ -112,7 +112,7 @@ export { getRQItems as getRenderQueueItems }
 /**
  * Gets all `compItem`s added to the render queue.
  * @method
- * @return {arrayEx} ArrayEx of CompItems in the render queue.
+ * @return ArrayEx of CompItems in the render queue.
  */
 export function getRQComps() {
 	const rqItems = getRQItems()
