@@ -1,5 +1,4 @@
 import { getCompositions, getItems } from './dom.ts'
-import { filter, forEach, setDefault } from './main.ts'
 import { arrayEx } from './objects/array.ts'
 import {
 	isArray,
@@ -12,6 +11,7 @@ import {
 } from './types.ts'
 import { getAEP } from './app.ts'
 import { getQueuedComps } from './renderqueue.ts'
+import { filter, forEach } from './forEach.ts'
 
 const {
 	app,

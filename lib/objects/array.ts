@@ -1,4 +1,4 @@
-import { extend } from '../main.ts'
+import { extend } from '../utils.ts'
 
 let arrayExObj = {
 	/**

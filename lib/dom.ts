@@ -1,6 +1,5 @@
 import { assertIsNotNull } from './assert.ts'
-import { forEachLayer } from './forEach.ts'
-import { forEach, setDefault } from './main.ts'
+import { forEach, forEachLayer } from './forEach.ts'
 import { version } from './app.ts'
 import { getFolder } from './project.ts'
 import { arrayEx } from './objects/array.ts'
@@ -12,6 +11,7 @@ import {
 	isLayer,
 	isPropertyGroup,
 } from './types.ts'
+import { setDefault } from './utils.ts'
 
 const {
 	app,

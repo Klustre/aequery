@@ -1,5 +1,5 @@
 import { getCompositions, getPropertyChildren } from './dom.ts'
-import { forEach } from './main.ts'
+import { arrayEx } from './objects/array.ts'
 import {
 	isArray,
 	isComp,
@@ -9,6 +9,52 @@ import {
 } from './types.ts'
 
 const { app, CompItem, Layer, PropertyGroup } = require('aftereffects')
+
+/**
+ * Is executed for each element in an array
+ * @callback forEachArrayCallback
+ * @param {Any}     element The current element in the array
+ * @param {Integer} index   The index of the current element in the array
+ * @param {Array}   array   The array being looped through
+ */
+
+/**
+ * Is executed for key-value pair in an object
+ * @callback forEachObjectCallback
+ * @param {Any}     element The current key in the object
+ * @param {Integer} index   The value of the current key
+ * @param {Array}   array   The object being looped through
+ */
+
+/**
+ * Loops through arrays and objects
+ * @function
+ * @param  {Array|Object} obj       The array or object to loop through.
+ * @param  {forEachArrayCallback|forEachObjectCallback} callback
+ *         Function to execute for each element in the object or array
+ * @param  {Number} [fromIndex]     Index to start iterating from
+ * @return {Array|Object}           The value of `obj`
+ */
+export function forEach(obj, callback, fromIndex) {
+	if (obj && Object.prototype.toString.call(obj) === '[object Array]') {
+		const length = obj.length
+		let i = fromIndex === undefined ? 0 : fromIndex
+		for (; i < length; i++) {
+			if (callback(obj[i], i, obj) === false) {
+				break
+			}
+		}
+	} else {
+		for (const i in obj) {
+			if (obj.hasOwnProperty(i)) {
+				if (callback(i, obj[i], obj) === false) {
+					break
+				}
+			}
+		}
+	}
+	return obj
+}
 
 /**
  * Loops through the layers of a comp, array of comps, or all layers in the
@@ -176,3 +222,34 @@ export function forEachOutputModule(callback) {
 	})
 }
 export { forEachOutputModule as forEachOM }
+
+/**
+ * Loops through arrays and objects and returns a filtered array
+ * @function
+ * @param  {Array|Object}   obj       The Array/object to loop through
+ * @param  {forEachArrayCallback|forEachObjectCallback} callback  The function
+ *         to execute for each element in the object. Should return a truthy
+ *         value if the element should be included in the returned array.
+ * @return {Array} The filtered array
+ */
+export function filter(obj, callback) {
+	let filteredArr = []
+
+	if (obj && Object.prototype.toString.call(obj) === '[object Array]') {
+		const length = obj.length
+		for (let i = 0; i < length; i++) {
+			if (callback(obj[i], i, obj)) {
+				filteredArr.push(obj[i])
+			}
+		}
+	} else {
+		for (const i in obj) {
+			if (obj.hasOwnProperty(i)) {
+				if (callback(i, obj[i], obj)) {
+					filteredArr.push(obj[i])
+				}
+			}
+		}
+	}
+	return arrayEx(filteredArr)
+}
