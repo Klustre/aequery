@@ -165,11 +165,12 @@ export function forEachSelectedProperty(undoGroup, callback) {
  *
  * @example
  * function getCustomGreeting() {
- *     return prompt( 'Enter your greeting!', 'Hello World!' )
+ *     return prompt('Enter your greeting!', 'Hello World!')
  * }
- * function say( greeting ) {
- *     a = setOrGetDefault( greeting, getCustomGreeting )
- *     alert( a )
+ *
+ * function say(greeting) {
+ *     a = setOrGetDefault(greeting, getCustomGreeting)
+ *     alert(a)
  * }
  */
 export function setOrGetDefault(value, defaultVal) {

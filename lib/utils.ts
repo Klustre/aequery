@@ -32,7 +32,7 @@ export function setDefault(value, defaultVal) {
  *     test: "example"
  * };
  *
- * extend( objectA, {
+ * extend(objectA, {
  *     prop: "prop"
  * });
  *

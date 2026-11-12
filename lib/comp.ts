@@ -20,20 +20,21 @@ const { app, CompItem, RenderQueueItem, FolderItem } = require('aftereffects')
  * @param  {number} [options.frameRate=24] Comp frame rate.
  * @return {CompItem}  The created comp item.
  *
- * @example <caption>Create a comp in the project root, with name "Example",
- *          and a duration of 10 seconds. And use default values for the
- *          other options</caption>
+ * @example
+ * <caption>Create a comp in the project root, with name "Example", and a duration of 10 seconds. And use default values for the other options</caption>
  * const comp = create({
  *     name: 'Example',
  *     duration: 10
  * })
  *
- * @example <caption>Create comp in a folder, with name "Example"</caption>
+ * @example
+ * <caption>Create comp in a folder, with name "Example"</caption>
  * const comp = create(compFolder, {
  *     name: "Example"
  * })
  *
- * @example <caption>Create a comp with all default values</caption>
+ * @example
+ * <caption>Create a comp with all default values</caption>
  * const comp = create()
  */
 export function create(folder, options) {

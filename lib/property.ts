@@ -31,8 +31,9 @@ const {
  * - `SHAPE`: Shape object
  * - `TEXT_DOCUMENT`: TextDocument object
  *
- * @example <caption>Returns "ThreeD_SPATIAL"</caption>
- * valueType( layer.Transform.Position )
+ * @example
+ * <caption>Returns "ThreeD_SPATIAL"</caption>
+ * valueType(layer.Transform.Position)
  */
 export function valueType(property: typeof Property) {
 	return valueInObject(

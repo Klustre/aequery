@@ -67,20 +67,21 @@ const { CompItem, FolderItem, Layer, PropertyGroup } = require('aftereffects')
  *
  * Pseudo selectors can be chained.
  *
- * @example <caption>Get all comps with width and height of 1920x1080</caption>
- *     query("comp[width=1920 heigth=1080]")
+ * @example
+ * <caption>Get all comps with width and height of 1920x1080</caption>
+ * query("comp[width=1920 heigth=1080]")
  *
- * @example <caption>Get all properties of layers that are selected and
- *          does not have audio:</caption>
- *     query("layer[selected hasAudio=false] prop")
+ * @example
+ * <caption>Get all properties of layers that are selected and does not have audio:</caption>
+ * query("layer[selected hasAudio=false] prop")
  *
- * @example <caption>Get properties that have `PropertyValueType.OneD` and are
- *          not selected.</caption>
- *     query("prop[propertyValueType=" + PropertyValueType.OneD + "]:not(selected)");
+ * @example
+ * <caption>Get properties that have `PropertyValueType.OneD` and are not selected.</caption>
+ * query(`prop[propertyValueType=${PropertyValueType.OneD}]:not(selected)`);
  *
- * @example <caption>Get layers that do not have audio inside comps
- *          that are selected:</caption>
- *    query("comp:is(selected) layer:not(hasAudio)")
+ * @example
+ * <caption>Get layers that do not have audio inside comps that are selected:</caption>
+ * query("comp:is(selected) layer:not(hasAudio)")
  */
 export type SelectorString = string
 
