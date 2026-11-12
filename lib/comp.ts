@@ -1,7 +1,7 @@
 import { isComp, isFolderItem } from './types.ts'
 import { getQueuedItems, getRQItems } from './renderqueue.ts'
 import { extend, setDefault } from './utils.ts'
-import { filter } from './forEach.ts'
+import { filter } from './iterate.ts'
 
 const { app, CompItem, RenderQueueItem, FolderItem } = require('aftereffects')
 

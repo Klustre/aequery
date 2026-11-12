@@ -11,7 +11,7 @@ import {
 } from './types.ts'
 import { getAEP } from './app.ts'
 import { getQueuedComps } from './renderqueue.ts'
-import { filter, forEach } from './forEach.ts'
+import { filter, forEach } from './iterate.ts'
 
 const {
 	app,

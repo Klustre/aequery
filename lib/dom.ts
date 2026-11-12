@@ -1,5 +1,5 @@
 import { assertIsNotNull } from './assert.ts'
-import { forEach, forEachLayer } from './forEach.ts'
+import { forEach, forEachLayer } from './iterate.ts'
 import { version } from './app.ts'
 import { getFolder } from './project.ts'
 import { arrayEx } from './objects/array.ts'
