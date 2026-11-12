@@ -1,7 +1,8 @@
 import { getComp } from '../dom.ts'
-import { extend, forEach } from '../main.ts'
+import { forEach } from '../iterate.ts'
 import { allChildren, children, parents, relatedLayers } from '../layer.ts'
 import { isComp, isLayer, isNumber, isString } from '../types.ts'
+import { extend } from '../utils.ts'
 import { aeqComp } from './comp.ts'
 
 const { Layer, CompItem } = require('aftereffects')
@@ -33,7 +34,7 @@ aeqLayer.prototype = {
 	},
 
 	// Function for extending the prototype using objects
-	extend: extend,
+	extend,
 
 	/**
 	 * Get the original object

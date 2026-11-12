@@ -1,5 +1,6 @@
-import { extend, forEach } from '../main.ts'
+import { forEach } from '../iterate.ts'
 import { isNumber } from '../types.ts'
+import { extend } from '../utils.ts'
 import { arrayEx } from './array.ts'
 import { aeqKey } from './key.ts'
 
@@ -30,7 +31,7 @@ aeqProperty.prototype = {
 	},
 
 	// Function for extending the prototype using objects
-	extend: extend,
+	extend,
 
 	/**
 	 * Get the original object

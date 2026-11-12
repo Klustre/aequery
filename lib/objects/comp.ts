@@ -1,4 +1,4 @@
-import { extend } from '../main.ts'
+import { extend } from '../utils.ts'
 
 const { CompItem } = require('aftereffects')
 
@@ -27,7 +27,7 @@ aeqComp.prototype = {
 	},
 
 	// Function for extending the prototype using objects
-	extend: extend,
+	extend,
 
 	/**
 	 * Get the original object

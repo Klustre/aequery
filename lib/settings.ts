@@ -1,4 +1,4 @@
-import { forEach } from './main.ts'
+import { forEach } from './iterate.ts'
 import { isObject } from './types.ts'
 
 const { app } = require('aftereffects')

@@ -1,5 +1,6 @@
-import { extend, forEach } from '../main.ts'
+import { forEach } from '../iterate.ts'
 import { isArray, isString } from '../types.ts'
+import { extend } from '../utils.ts'
 import { aeqProperty } from './property.ts'
 
 const {
@@ -44,7 +45,7 @@ aeqKey.prototype = {
 	},
 
 	// Function for extending the prototype using objects
-	extend: extend,
+	extend,
 
 	// Used to check if the key index is the correct for refrensing
 	// TODO: consider not checking this in every function or find better way to do this
