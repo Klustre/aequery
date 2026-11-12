@@ -95,7 +95,7 @@ export type SelectorString = string
  * @return The found After Effects objects
  */
 // TODO: Fix complexity of this function
-export function select(
+export function query(
 	selector: SelectorString,
 	context?:
 		| typeof CompItem
@@ -110,7 +110,7 @@ export function select(
 
 	if (context !== undefined) {
 		if (isString(context)) {
-			results = select(context)
+			results = query(context)
 		} else if (isArray(context)) {
 			results = context
 		} else {
